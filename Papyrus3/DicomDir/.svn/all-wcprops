@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/osirix/!svn/ver/7576/osirix/Papyrus3/DicomDir
+END
+DicomDirPubFunctionDef3.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirPubFunctionDef3.h
+END
+DicomDir.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDir.h
+END
+DicomDirTypeDef3.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirTypeDef3.h
+END
+DicomDirInitRecords.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirInitRecords.h
+END
+DicomDirEnumRecords.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirEnumRecords.h
+END
+DicomDirPrivFunctionDef3.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirPrivFunctionDef3.h
+END
+DicomDirGlobalVar3.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/DicomDirGlobalVar3.h
+END
+OGlobalDicomFunc.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svnroot/osirix/!svn/ver/2/osirix/Papyrus3/DicomDir/OGlobalDicomFunc.h
+END
