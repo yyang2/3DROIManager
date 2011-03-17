@@ -11,4 +11,5 @@
 
 @interface VRView (Yang)
 -(NSMutableArray*) get3DPositionArray;
+-(void) callSuperKeyDown: (NSEvent*)keyDown;
 @end

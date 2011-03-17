@@ -8,6 +8,7 @@
 //-add roi to queue
 
 #import "ThreeDROIManagerController.h"
+
 #import <OsiriX Headers/Notifications.h>
 #import <OsiriX Headers/ViewerController.h>
 #import "ViewerController+Yang.h"
@@ -20,6 +21,7 @@
 #import <OsiriX Headers/OrthogonalMPRPETCTController.h>
 #import <OsiriX Headers/OrthogonalMPRPETCTViewer.h>
 #import <OsiriX Headers/OrthogonalMPRView.h>
+#import "SwizzleDCMView.h"
 #include <OpenGL/CGLMacro.h>
 #include <OpenGL/CGLCurrent.h>
 #include <OpenGL/CGLContext.h>
@@ -90,6 +92,25 @@
 	// function sets up "sandbox" for convenient analysis, this includes hiding the original 2D ViewerController and initializing the VRView (3D)
 	// orthogonal MPR (3 orthogonal planes).
 	// the state of all three windows - ViewerController (hidden), VRViewer, and OrthogonalMPRViewer are kept in sync by the class.
+	Class  VR			= objc_getClass("VRView");
+	Class  SwizzleVR	= objc_getClass("SwizzleVRView");
+	
+	Method oldClick = class_getInstanceMethod(VR, @selector(mouseDown:));
+	Method newClick = class_getInstanceMethod(SwizzleVR, @selector(mouseDown:));
+	IMP	   newClickImp = method_getImplementation(newClick);
+	oldClickImp = method_getImplementation(oldClick);
+	method_setImplementation(oldClick, newClickImp);
+	
+	Class oldView = objc_getClass("DCMView");
+	Class SwizzleView = objc_getClass("SwizzleDCMView");
+	
+	Method oldMouseUpMethod = class_getInstanceMethod(oldView, @selector(mouseUp:));
+	Method newMouseUpMethod = class_getInstanceMethod(SwizzleView, @selector(mouseUp:));
+	
+	IMP newMouseUp = method_getImplementation(newMouseUpMethod);
+	oldMouseUp = method_getImplementation(oldMouseUpMethod);
+	method_setImplementation(oldMouseUpMethod, newMouseUp);
+	
 	
 	self = [super initWithWindowNibName:@"3DROIManager"];
 	if(!self) return nil;
@@ -267,6 +288,15 @@
 
 - (void) dealloc
 {
+	Class  VR			= objc_getClass("VRView");
+	Method oldClick = class_getInstanceMethod(VR, @selector(mouseDown:));
+	method_setImplementation(oldClick, oldClickImp);
+	
+	Class oldView = objc_getClass("DCMView");
+	Method oldMouseUpMethod = class_getInstanceMethod(oldView, @selector(mouseUp:));
+	method_setImplementation(oldMouseUpMethod, oldMouseUp);
+
+	
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	
 	[ShapesController release];
@@ -463,7 +493,7 @@ NSInteger sortbyroiname(NSMutableDictionary *obj1, NSMutableDictionary *obj2, vo
 					if (![frames containsObject:[NSNumber numberWithInt:frameNo]]) { //if framenumber is not added, add it to the array
 						[[[curROIlist objectAtIndex:index] objectForKey: @"frames"] addObject:[NSNumber numberWithInt:frameNo]]; }
 				}
-				else if([[curROI name] hasSuffix:@"_center"]){ 
+				else if([[curROI name] hasSuffix:@"center"] || [[curROI name] hasSuffix:@"ellipse"]){ 
 					[centerList addObject: curROI];
 				}
 				else if([[curROI name] hasSuffix:@"about to be deleted"]){ 
@@ -597,8 +627,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		ROI *selectedROI = [[curROIlist objectAtIndex:(row)] objectForKey: @"roi"];
 		
 		if([selectedROI type] == t2DPoint) return @"Point";
-		if([selectedROI type] == tOval) return @"Sphere";
-		if([selectedROI type] == tPlain) return @"Custom";		
+		if([selectedROI type] == tOval) return @"3DObject";
+		if([selectedROI type] == tPlain) return @"Growing Region";		
 	}
 	
 	if( [[tableColumn identifier] isEqualToString:@"roiIsLocked"])
@@ -619,6 +649,23 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		}
 	}
 	return nil;
+}
+
+-(ROI*)centerForOrthoROI:(ROI*)orth
+{
+	ROI *centerObject = nil;
+	unsigned int i = 0;
+	while (!centerObject)
+	{
+		if (i==[centerList count]) return nil;
+		
+		if ([[[centerList objectAtIndex:i] name] hasPrefix:orth.name]) 
+			centerObject = [centerList objectAtIndex:i];
+		i++;
+		
+	}
+	return centerObject;
+	
 }
 
 - (NSMutableDictionary *) getCenterROI:(ROI *)roiofinterest {
@@ -966,7 +1013,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	// makes the contour visible in 3D
 	
 	
-	NSMutableArray *this = [D3View roiVolumes];
+	NSMutableArray *ar = [D3View roiVolumes];
 	int i;
 	
 //	NSLog(@"ROIVOLUMES ARRAY: %@", this);
@@ -983,12 +1030,12 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	selectedROI = [roiandposition objectForKey:@"roi"];
 	slicePosition = [[roiandposition objectForKey:@"middleslice"] floatValue];
 	
-	for(i=0; i<[this count]; i++){
+	for(i=0; i<[ar count]; i++){
 		ROIVolume *current;
-		current = [this objectAtIndex:i];
+		current = [ar objectAtIndex:i];
 		if ([[selectedROI name] isEqualToString: [current name]]) {
-			id this = [[current properties] valueForKey:@"visible"];
-			NSLog(@"visible? %@", this);
+			id ar = [[current properties] valueForKey:@"visible"];
+			NSLog(@"visible? %@", ar);
 			NSLog(@"MY name is : %@", [current name]);
 			[D3View displayROIVolume:current];
 			break;
@@ -1000,8 +1047,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }	
 - (IBAction) HideROI:(id)sender {
 	//makes the contour invisible in 3D
-	NSMutableArray *this = [NSMutableArray array];
-	this = [D3View roiVolumes];
+	NSMutableArray *ar = [D3View roiVolumes];
 	int i;
 	
 //	NSLog(@"ROIVOLUMES ARRAY: %@", this);
@@ -1017,9 +1063,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	selectedROI = [roiandposition objectForKey:@"roi"];
 	slicePosition = [[roiandposition objectForKey:@"middleslice"] floatValue];
 	
-	for(i=0; i<[this count]; i++){
+	for(i=0; i<[ar count]; i++){
 		ROIVolume *current;
-		current = [this objectAtIndex:i];
+		current = [ar objectAtIndex:i];
 		if ([[selectedROI name] isEqualToString: [current name]]) {
 			
 //			NSLog(@"MY name is : %@", [current name]);
@@ -1101,6 +1147,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		ROI *temp = [rois objectAtIndex:j];
 		temp.locked = !temp.locked;
 	}
+	
 	//refresh view so roi status is updated.
 	// i force a redraw by changing position x+1 and then moving it back
 	float x,y;

@@ -94,6 +94,11 @@
 	Method newremovePoint = class_getInstanceMethod(SwizzleVR, @selector(removeSelected3DPoint));
 	IMP		impremovePoint = method_getImplementation(newremovePoint);
 	method_setImplementation(removePoint, impremovePoint);
+//
+//	Method oldClick = class_getInstanceMethod(VR, @selector(mouseDown:));
+//	Method newClick = class_getInstanceMethod(SwizzleVR, @selector(mouseDown:));
+//	IMP	   newClickImp = method_getImplementation(newClick);
+//	method_setImplementation(oldClick, newClickImp);
 	
 	Method point3DArray = class_getInstanceMethod(SwizzleVR, @selector(get3DPositionArray));
 	IMP		imppoint3DArray = method_getImplementation(point3DArray);

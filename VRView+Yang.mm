@@ -16,4 +16,11 @@
 	return point3DPositionsArray; 
 }
 
+-(void) callSuperKeyDown: (NSEvent*)keyDown 
+{
+	//implementing this because VTKView keyDown:(char p) selects point in VRView,
+	// needed for Swizzle VRView to work correctly
+	[super keyDown:keyDown];
+}
+
 @end

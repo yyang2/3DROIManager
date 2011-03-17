@@ -22,8 +22,10 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		ABA48A650680BB600089EB4F /* ThreeDROIManagerFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABA48A670680BB690089EB4F /* ThreeDROIManagerFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */; };
-		C5DE13C612516F540033CE30 /* OsiriX Headers.framework in Resources */ = {isa = PBXBuildFile; fileRef = DD90230211C7E23100821250 /* OsiriX Headers.framework */; };
-		C5DE13C712516F540033CE30 /* OsiriX.framework in Resources */ = {isa = PBXBuildFile; fileRef = DDAE74FD120C7DC200BC3843 /* OsiriX.framework */; };
+		C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */ = {isa = PBXBuildFile; fileRef = DD90230211C7E23100821250 /* OsiriX.framework */; };
+		C5DE13C712516F540033CE30 /* OsiriX Headers.framework in Resources */ = {isa = PBXBuildFile; fileRef = DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */; };
+		C5E5E14013303A7B00304430 /* SwizzleDCMView.h in Headers */ = {isa = PBXBuildFile; fileRef = C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */; };
+		C5E5E14113303A7B00304430 /* SwizzleDCMView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */; };
 		C5F89F4412F0BAC10066D542 /* SwizzleROIVolume.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F89F4212F0BAC10066D542 /* SwizzleROIVolume.h */; };
 		C5F89F4512F0BAC10066D542 /* SwizzleROIVolume.mm in Sources */ = {isa = PBXBuildFile; fileRef = C5F89F4312F0BAC10066D542 /* SwizzleROIVolume.mm */; };
 		C5F8A5C212F0BC020066D542 /* algorithm in Resources */ = {isa = PBXBuildFile; fileRef = C5F89F7E12F0BC000066D542 /* algorithm */; };
@@ -1716,6 +1718,8 @@
 		AB5D36050680E57E00F4007A /* 3DROIManager.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3DROIManager.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ThreeDROIManagerFilter.h; sourceTree = "<group>"; };
 		ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ThreeDROIManagerFilter.mm; sourceTree = "<group>"; };
+		C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleDCMView.h; sourceTree = "<group>"; };
+		C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleDCMView.m; sourceTree = "<group>"; };
 		C5F89F4212F0BAC10066D542 /* SwizzleROIVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleROIVolume.h; sourceTree = "<group>"; };
 		C5F89F4312F0BAC10066D542 /* SwizzleROIVolume.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SwizzleROIVolume.mm; sourceTree = "<group>"; };
 		C5F89F7E12F0BC000066D542 /* algorithm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = algorithm; sourceTree = "<group>"; };
@@ -3341,10 +3345,10 @@
 		DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLUTBar.h; sourceTree = "<group>"; };
 		DD3A57B21199F18A00ED9FF0 /* CLUTBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLUTBar.m; sourceTree = "<group>"; };
 		DD85E06211878F190025BE95 /* 2DBlending.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = 2DBlending.tif; sourceTree = "<group>"; };
-		DD90230211C7E23100821250 /* OsiriX Headers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OsiriX Headers.framework"; path = "/Users/yangyang/Documents/osirix/osirix/build/Development/OsiriX Headers.framework"; sourceTree = "<absolute>"; };
+		DD90230211C7E23100821250 /* OsiriX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OsiriX.framework; path = ../../osirix/osirix/build/Development/OsiriX.framework; sourceTree = SOURCE_ROOT; };
 		DD90230611C7E25500821250 /* VRController+Yang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VRController+Yang.h"; sourceTree = "<group>"; };
 		DD90230711C7E25500821250 /* VRController+Yang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VRController+Yang.m"; sourceTree = "<group>"; };
-		DDAE74FD120C7DC200BC3843 /* OsiriX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OsiriX.framework; path = /Users/yangyang/Documents/osirix/osirix/build/Development/OsiriX.framework; sourceTree = "<absolute>"; };
+		DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OsiriX Headers.framework"; path = "../../osirix/osirix/build/Development/OsiriX Headers.framework"; sourceTree = SOURCE_ROOT; };
 		DDE02CC712A45871002CE8E7 /* SM2DGraphView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; path = SM2DGraphView.framework; sourceTree = "<group>"; };
 		DDE702AA12F09C7400E73161 /* PapyWild3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapyWild3.h; path = Papyrus3/PapyWild3.h; sourceTree = "<group>"; };
 		DDE702AB12F09C7400E73161 /* PapyVars3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PapyVars3.c; path = Papyrus3/PapyVars3.c; sourceTree = "<group>"; };
@@ -3420,8 +3424,8 @@
 			isa = PBXGroup;
 			children = (
 				DDE02CC712A45871002CE8E7 /* SM2DGraphView.framework */,
-				DD90230211C7E23100821250 /* OsiriX Headers.framework */,
-				DDAE74FD120C7DC200BC3843 /* OsiriX.framework */,
+				DD90230211C7E23100821250 /* OsiriX.framework */,
+				DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				089C1672FE841209C02AAC07 /* Foundation.framework */,
 				089C167FFE841241C02AAC07 /* AppKit.framework */,
@@ -5151,6 +5155,8 @@
 		DDE7044F12F0D18100E73161 /* Osirix Mods */ = {
 			isa = PBXGroup;
 			children = (
+				C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */,
+				C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */,
 				DD90230611C7E25500821250 /* VRController+Yang.h */,
 				DD90230711C7E25500821250 /* VRController+Yang.m */,
 				2716B72F116BAC9D000E1A5A /* DMCPix+Yang.h */,
@@ -6806,6 +6812,7 @@
 				C5F8AC1512F0BC590066D542 /* SwizzleOrthogonalMPRController.h in Headers */,
 				DDE7045A12F0D2E300E73161 /* SwizzleVRView.h in Headers */,
 				DD33792E12FB7018003BCCAE /* VRView+Yang.h in Headers */,
+				C5E5E14013303A7B00304430 /* SwizzleDCMView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6862,8 +6869,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDE02CCB12A45876002CE8E7 /* SM2DGraphView.framework in Resources */,
-				C5DE13C612516F540033CE30 /* OsiriX Headers.framework in Resources */,
-				C5DE13C712516F540033CE30 /* OsiriX.framework in Resources */,
+				C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */,
+				C5DE13C712516F540033CE30 /* OsiriX Headers.framework in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				DDFE8F61130322010015387F /* 3DROIManager.xib in Resources */,
 				2716B715116BAC77000E1A5A /* Geometries.xib in Resources */,
@@ -6941,6 +6948,7 @@
 				C5F8AC1612F0BC590066D542 /* SwizzleOrthogonalMPRController.m in Sources */,
 				DDE7045B12F0D2E300E73161 /* SwizzleVRView.mm in Sources */,
 				DD33792F12FB7018003BCCAE /* VRView+Yang.mm in Sources */,
+				C5E5E14113303A7B00304430 /* SwizzleDCMView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

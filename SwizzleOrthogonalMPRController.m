@@ -56,11 +56,11 @@
 			ROI *aROI = [[rois objectAtIndex:i] objectAtIndex:j];
 			if([aROI type]==t2DPoint)
 			{
-				if([aROI.name hasSuffix:@"_center"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"]){
-					float radius;
-					NSString *rads = [aROI.name substringWithRange:NSMakeRange([[aROI name] length] - 13, 6)];
-					radius = [rads floatValue]/2.f;
-					if ([rads hasPrefix:@"_"]) radius = [[rads substringWithRange:NSMakeRange(1, 4)] floatValue]/2.f;
+				if([aROI.name hasSuffix:@"_center"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"])
+				{
+					double radius = .5*[[[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:1] doubleValue];
+					NSString *name = [[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:0]; 
+
 					float change = fabs([[[aROI points] objectAtIndex:0] x]-x);
 					if(change < radius) {
 						ROI *newCircle = [[[ROI alloc] initWithType: tOval :[yReslicedView pixelSpacingX] :[yReslicedView pixelSpacingY] :NSMakePoint( [yReslicedView origin].x, [yReslicedView origin].y)] autorelease];
@@ -72,18 +72,48 @@
 						long sliceIndex = (sign>0)? [[originalView dcmPixList] count]-1 -i : i;
 						irect.origin.y = sliceIndex;
 						
-						
-						NSString * name =[aROI.name substringWithRange:NSMakeRange(0, [aROI.name length] - 13)];
-						NSLog(@"Name for center: %@", name);
-						if ([name hasSuffix:@"_"])
-							name =[aROI.name substringWithRange:NSMakeRange(0, [aROI.name length] - 14)];						
 						ROI *border = [[[viewer viewerController] roisWithName:name in4D:YES] objectAtIndex:0];
 						
 						newCircle.locked = border.locked;
-						[newCircle setROIRect:irect]; [newCircle setName:[aROI.name substringWithRange:NSMakeRange(0, [aROI.name length]-13)]];
+						[newCircle setROIRect:irect]; 
+						[newCircle setName:name];
 						[roisAtX addObject:newCircle];
 					}
 				}
+				if([aROI.name hasSuffix:@"_ellipse"] && [[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"])
+				{
+					NSString *xyz = [[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:1];
+					NSArray  *dimensions = [xyz componentsSeparatedByString:@","];
+					double xrad = .5*[[dimensions objectAtIndex:0] doubleValue];
+					double yrad = .5*[[dimensions objectAtIndex:1] doubleValue];
+					double zrad = .5*[[dimensions objectAtIndex:2] doubleValue];
+
+					//this is in yrescliced view: x,y,z -> y,z,x
+					
+ 					float change = fabs([[[aROI points] objectAtIndex:0] x]-x);
+					if(change < xrad) {
+						ROI *newCircle = [[[ROI alloc] initWithType: tOval :[yReslicedView pixelSpacingX] :[yReslicedView pixelSpacingY] :NSMakePoint( [yReslicedView origin].x, [yReslicedView origin].y)] autorelease];
+						double t = asin(change/xrad);
+						double newyradius = yrad*cos(t);
+						double newzradius = zrad*cos(t);
+						NSRect irect;
+						irect.size.height = newzradius/[yReslicedView pixelSpacingY]; 
+						irect.size.width = newyradius/[yReslicedView pixelSpacingX];
+						irect.origin.x = [[[aROI points] objectAtIndex:0] y];
+						long sliceIndex = (sign>0)? [[originalView dcmPixList] count]-1 -i : i;
+						irect.origin.y = sliceIndex;
+						
+						
+						NSString * name =[[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:0];
+						ROI *border = [[[viewer viewerController] roisWithName:name in4D:YES] objectAtIndex:0];
+						
+						newCircle.locked = border.locked;
+						[newCircle setROIRect:irect]; 
+						[newCircle setName:name];
+						[roisAtX addObject:newCircle];
+					}
+				}
+				
 				if((long)([[[aROI points] objectAtIndex:0] x])==x)
 				{
 					ROI *new2DPointROI = [[[ROI alloc] initWithType: t2DPoint :[yReslicedView pixelSpacingX] :[yReslicedView pixelSpacingY] :NSMakePoint( [yReslicedView origin].x, [yReslicedView origin].y)] autorelease];
@@ -171,10 +201,10 @@
 			{
 			
 				if([[aROI name] hasSuffix:@"_center"]){
- 					float radius;
- 					NSString *rads = [[aROI name] substringWithRange:NSMakeRange([[aROI name] length] - 13, 6)];
- 					radius = [rads floatValue]/2.f;
- 					if ([rads hasPrefix:@"_"]) radius = [[rads substringWithRange:NSMakeRange(1, 4)] floatValue]/2.f;
+					
+					double radius = .5*[[[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:1] doubleValue];
+					NSString *name = [[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:0]; 
+
  					float change = [[[aROI points] objectAtIndex:0] y]-y;
  					
  					if(fabs(change) < radius) {
@@ -186,18 +216,49 @@
 						long sliceIndex = (sign>0)? [[originalView dcmPixList] count]-1 -i : i; // i is slice number
 						irect.origin.y = sliceIndex;
 						
-						NSString * name =[aROI.name substringWithRange:NSMakeRange(0, [aROI.name length] - 13)];
-						NSLog(@"Name for center: %@", name);
-						if ([name hasSuffix:@"_"])
-							name =[aROI.name substringWithRange:NSMakeRange(0, [aROI.name length] - 14)];						
 						ROI *border = [[[viewer viewerController] roisWithName:name in4D:YES] objectAtIndex:0];
 					 	
 						newCircle.locked = border.locked;
-						[newCircle setROIRect:irect]; [newCircle setName:[[aROI name] substringWithRange:NSMakeRange(0, [[aROI name] length]-13)]];
+						[newCircle setROIRect:irect]; 
+						[newCircle setName:name];
 						[roisAtY addObject:newCircle];
 						
 					}
  				}
+				else if([aROI.name hasSuffix:@"_ellipse"])
+				{
+					NSString *xyz = [[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:1];
+					NSArray  *dimensions = [xyz componentsSeparatedByString:@","];
+					double xrad = .5*[[dimensions objectAtIndex:0] doubleValue];
+					double yrad = .5*[[dimensions objectAtIndex:1] doubleValue];
+					double zrad = .5*[[dimensions objectAtIndex:2] doubleValue];
+					
+					//this is in xrescliced view: x,y,z -> x,z,y
+					
+					float change = fabs([[[aROI points] objectAtIndex:0] y]-y);
+					if(change < yrad) {
+						ROI *newCircle = [[[ROI alloc] initWithType: tOval :[yReslicedView pixelSpacingX] :[yReslicedView pixelSpacingY] :NSMakePoint( [yReslicedView origin].x, [yReslicedView origin].y)] autorelease];
+						double t = asin(change/yrad);
+						double newxradius = xrad*cos(t);
+						double newzradius = zrad*cos(t);
+						NSRect irect;
+						irect.size.height = newzradius/[xReslicedView pixelSpacingY]; 
+						irect.size.width = newxradius/[xReslicedView pixelSpacingX];
+						irect.origin.x = [[[aROI points] objectAtIndex:0] x];
+						long sliceIndex = (sign>0)? [[originalView dcmPixList] count]-1 -i : i;
+						irect.origin.y = sliceIndex;
+						
+
+						NSString *name = [[aROI.name componentsSeparatedByString:@"_"] objectAtIndex:0];
+						ROI *border = [[[viewer viewerController] roisWithName:name in4D:YES] objectAtIndex:0];
+						
+						newCircle.locked = border.locked;
+						[newCircle setROIRect:irect]; 
+						[newCircle setName:name];
+						[roisAtY addObject:newCircle];
+					}
+				}
+				
 				if((long)([[[aROI points] objectAtIndex:0] y])==y)
 				{
 					ROI *new2DPointROI = [[[ROI alloc] initWithType: t2DPoint :[xReslicedView pixelSpacingX] :[xReslicedView pixelSpacingY] :NSMakePoint( [xReslicedView origin].x, [xReslicedView origin].y)] autorelease];
@@ -214,7 +275,6 @@
 					[roisAtY addObject:new2DPointROI];
 				}
 			}
-			
 			if([aROI type]==tPlain && [[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"])
 			{	
  				[[NSUserDefaults standardUserDefaults] setFloat:1.0 forKey:@"ROIRegionThickness"]; //sets so only draws in single point

@@ -17,7 +17,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Osirix Headers/DCMView.h>
 #import <Osirix Headers/DCMPix.h>
-
+#import <objc/runtime.h>
 #import "ViewerController+Yang.h"
 #import "VRView+Yang.h"
 
@@ -46,6 +46,7 @@
 	IBOutlet NSButton			*playButton, *ChangeRadiusButton, *ShowButton, *HideButton, *DeleteButton, *GoToButton, *StartVolumeButton, *GenerateTACButton, *ExportROIButton, *LockMin,*LockROIButton;
 	float		pixelSpacingZ;
 	
+	IMP			oldClickImp, oldMouseUp;
 	
 	NSMutableArray
 	*curROIlist, 
@@ -104,6 +105,7 @@
 - (id)tableView:(NSTableView *)aTableView
 objectValueForTableColumn:(NSTableColumn *)aTableColumn
 			row:(NSInteger)rowIndex;
+-(ROI*)centerForOrthoROI:(ROI*)orth;
 - (void) roiListModification :(NSNotification*) note;
 - (void) fireUpdate: (NSNotification*) note;
 @end
