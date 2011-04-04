@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX Headers/ViewerController.h>
+#import <OsirixAPI/ViewerController.h>
 
 @interface SwizzleViewerController : ViewerController {
 

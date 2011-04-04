@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Osirix Headers/VRView.h>
-#import <OsiriX Headers/VTKView.h>
+#import <OsirixAPI/VRView.h>
+#import <OsirixAPI/VTKView.h>
 
 @interface SwizzleVRView : VRView 
 {

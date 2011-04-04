@@ -14,10 +14,10 @@ enum chartDisplayXOptions{
 };
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX Headers/ROI.h>
-#import <OsiriX Headers/DCMPix.h>
-#import <OsiriX Headers/DCMView.h>
-#import <OsiriX Headers/ViewerController.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/DCMPix.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/ViewerController.h>
 #import <SM2DGraphView/SM2DGraphView.h>
 
 //Simple class, including windowcontroller, which takes in the viewer + ROI in viewer, generates a Time Activity Curve.

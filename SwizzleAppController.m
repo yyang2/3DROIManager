@@ -7,7 +7,7 @@
 //
 
 #import "SwizzleAppController.h"
-#import <Osirix Headers/AppController.h>
+#import <OsirixAPI/AppController.h>
 
 @implementation SwizzleAppController
 

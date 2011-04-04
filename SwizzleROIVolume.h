@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OsiriX Headers/ROIVolume.h>
+#import <OsirixAPI/ROIVolume.h>
 
 @interface SwizzleROIVolume : ROIVolume {
 

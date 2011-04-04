@@ -29,13 +29,13 @@ BOOL gUseJPEGColorSpace = NO;
 
 extern short Altivec;
 
-//void PapyrusLockFunction( int lock)
-//{
-//	if( lock)
-//		[PapyrusLock lock];
-//	else
-//		[PapyrusLock unlock];
-//}
+void PapyrusLockFunction( int lock)
+{
+	if( lock)
+		[PapyrusLock lock];
+	else
+		[PapyrusLock unlock];
+}
 
 
 @implementation SwizzleDCMPix
@@ -70,14 +70,14 @@ extern short Altivec;
 	viewPosition = 0;
 	patientPosition = 0;
 	width = height = 0;
-	
+    
 	originX = 0;
 	originY = 0;
 	originZ = 0;
 	
 	if( purgeCacheLock == nil)
 		purgeCacheLock = [[NSConditionLock alloc] initWithCondition: 0];
-	
+
 	[purgeCacheLock lock];
 	[purgeCacheLock unlockWithCondition: [purgeCacheLock condition]+1];
 	
@@ -104,30 +104,34 @@ extern short Altivec;
 				if ( val) cineRate = atof( val->a);	//[[NSString stringWithFormat:@"%0.1f", ] floatValue];
 				
 				acquisitionTime = nil;
-				val = Papy3GetElement (theGroupP, papAcquisitionDateGr, &nbVal, &elemType);
-				if (val != NULL)
+				
+				
+				if( acquisitionTime == nil)
 				{
-					NSString	*studyDate = [NSString stringWithCString:val->a encoding: NSASCIIStringEncoding];
-					if( [studyDate length] != 6) studyDate = [studyDate stringByReplacingOccurrencesOfString:@"." withString:@""];
-					
-					val = Papy3GetElement (theGroupP, papAcquisitionTimeGr, &nbVal, &elemType);
+					val = Papy3GetElement (theGroupP, papAcquisitionDateGr, &nbVal, &elemType);	
 					if (val != NULL)
 					{
-						NSString*   completeDate;
-						NSString*   studyTime = [NSString stringWithCString:val->a encoding: NSASCIIStringEncoding];
+						NSString	*studyDate = [NSString stringWithCString:val->a encoding: NSASCIIStringEncoding];
+						if( [studyDate length] != 6) studyDate = [studyDate stringByReplacingOccurrencesOfString:@"." withString:@""];
 						
-						completeDate = [studyDate stringByAppendingString:studyTime];
-						
-						if( [studyTime length] >= 6)
-							acquisitionTime = [[NSCalendarDate alloc] initWithString:completeDate calendarFormat:@"%Y%m%d%H%M%S"];
-						else
-							acquisitionTime = [[NSCalendarDate alloc] initWithString:completeDate calendarFormat:@"%Y%m%d%H%M"];
-						
-						if( acquisitionTime)
-							acquisitionDate = [studyDate copy];
+						val = Papy3GetElement (theGroupP, papAcquisitionTimeGr, &nbVal, &elemType);
+						if (val != NULL)
+						{
+							NSString*   completeDate;
+							NSString*   studyTime = [NSString stringWithCString:val->a encoding: NSASCIIStringEncoding];
+							
+							completeDate = [studyDate stringByAppendingString:studyTime];
+							
+							if( [studyTime length] >= 6)
+								acquisitionTime = [[NSCalendarDate alloc] initWithString:completeDate calendarFormat:@"%Y%m%d%H%M%S"];
+							else
+								acquisitionTime = [[NSCalendarDate alloc] initWithString:completeDate calendarFormat:@"%Y%m%d%H%M"];
+							
+							if( acquisitionTime)
+								acquisitionDate = [studyDate copy];
+						}
 					}
 				}
-				
 				if( acquisitionTime == nil)
 				{
 					val = Papy3GetElement (theGroupP, papSeriesDateGr, &nbVal, &elemType);
@@ -173,7 +177,7 @@ extern short Altivec;
 			theGroupP = (SElement*) [self getPapyGroup: 0x0018];
 			if( theGroupP)
 				[self papyLoadGroup0x0018: theGroupP];
-			
+            
 			theGroupP = (SElement*) [self getPapyGroup: 0x0020];
 			if( theGroupP)
 				[self papyLoadGroup0x0020: theGroupP];
@@ -182,7 +186,7 @@ extern short Altivec;
 			if( theGroupP || [SOPClassUID hasPrefix: @"1.2.840.10008.5.1.4.1.1.104.1"] || [SOPClassUID hasPrefix: @"1.2.840.10008.5.1.4.1.1.88"]) // This group is MANDATORY... or DICOM SR / PDF / Spectro
 			{
 				if( theGroupP)
-					[self papyLoadGroup0x0028: theGroupP];
+                    [self papyLoadGroup0x0028: theGroupP];
 				
 #pragma mark SUV
 				
@@ -198,9 +202,9 @@ extern short Altivec;
 					if( val) decayCorrection = [[NSString stringWithCString:val->a encoding: NSISOLatin1StringEncoding] retain];
 					else decayCorrection = nil;
 					
-					//				val = Papy3GetElement (theGroupP, papDecayFactorGr, &pos, &elemType);
-					//				if( val) decayFactor = atof( val->a);
-					//				else decayFactor = 1.0;
+                    //				val = Papy3GetElement (theGroupP, papDecayFactorGr, &pos, &elemType);
+                    //				if( val) decayFactor = atof( val->a);
+                    //				else decayFactor = 1.0;
 					decayFactor = 1.0;
 					
 					val = Papy3GetElement (theGroupP, papFrameReferenceTimeGr, &pos, &elemType);
@@ -254,8 +258,7 @@ extern short Altivec;
 					}
 					
 					val = Papy3GetElement (theGroupP, papDetectorInformationSequenceGr, &pos, &elemType);
-					
-					if ( val)
+					if( val)
 					{
 						if( val->sq)
 						{
@@ -263,7 +266,7 @@ extern short Altivec;
 							while (dcmList != NULL)
 							{
 								SElement * gr = (SElement *) dcmList->object->group;
-								
+                                
 								if( gr)
 								{
 									if( gr->group == 0x0020)
@@ -327,6 +330,9 @@ extern short Altivec;
 												
 												for (int j = nbVal; j < 6; j++)
 													orientation[ j] = 0;
+                                                
+                                                //												orientation[ 0] = 1;	orientation[ 1] = 0;	orientation[ 2] = 0; tests, force axial matrix
+                                                //												orientation[ 3] = 0;	orientation[ 4] = 1;	orientation[ 5] = 0;
 											}
 											else // doesnt the root Image Orientation contains valid data? if not use the normal vector
 											{
@@ -406,8 +412,8 @@ extern short Altivec;
 												}
 											}
 										}
-										break;
-										
+                                        break;
+                                        
 									case 0x0020:
 										val3 = Papy3GetElement (gr, papPlaneOrientationSequence, &nbVal, &elemType);
 										if (val3 != NULL && nbVal >= 1)
@@ -432,7 +438,7 @@ extern short Altivec;
 												}
 											}
 										}
-										break;
+                                        break;
 										
 									case 0x0028:
 										val3 = Papy3GetElement (gr, papPixelMatrixSequence, &nbVal, &elemType);
@@ -485,7 +491,7 @@ extern short Altivec;
 											}
 										}
 										
-										break;
+                                        break;
 								}
 								
 								// get the next element of the list
@@ -554,8 +560,8 @@ extern short Altivec;
 																}
 															}
 														}
-														break;
-														
+                                                        break;
+                                                        
 													case 0x0028:
 														val = Papy3GetElement (gr, papPixelMatrixSequence, &nbVal, &elemType);
 														if (val != NULL && nbVal >= 1)
@@ -582,8 +588,8 @@ extern short Altivec;
 																}
 															}
 														}
-														break;
-														
+                                                        break;
+                                                        
 													case 0x0020:
 														val = Papy3GetElement (gr, papPlanePositionSequence, &nbVal, &elemType);
 														if (val != NULL && nbVal >= 1)
@@ -635,7 +641,7 @@ extern short Altivec;
 																}
 															}
 														}
-														break;
+                                                        break;
 												} // switch( gr->group)
 											} // if( groupsForFrame->object->item)
 											
@@ -698,25 +704,27 @@ extern short Altivec;
 					if (val != NULL && oBits == 1 && oRows == height && oColumns == width && oType == 'G' && oBitPosition == 0 && oOrigin[ 0] == 1 && oOrigin[ 1] == 1)
 					{
 						if( oData) free( oData);
-						oData = malloc( oRows*oColumns);
+						oData = calloc( oRows*oColumns, 1);
 						if( oData)
 						{
-							unsigned short *pixels = val->ow;
-							char			valBit [ 16];
-							char			mask = 1;
-							int				x;
+							register unsigned short *pixels = val->ow;
+							register unsigned char *oD = oData;
+							register char mask = 1;
+							register long t = oColumns*oRows/16;
 							
-							for ( i = 0; i < oColumns*oRows/16; i++)
+							while( t-->0)
 							{
-								unsigned short	octet = pixels[ i];
-								
-								for (x = 0; x < 16;x ++)
+								register unsigned short	octet = *pixels++;
+								register int x = 16;
+								while( x-->0)
 								{
-									valBit[ x] = octet & mask ? 1 : 0;
+									char v = octet & mask ? 1 : 0;
 									octet = octet >> 1;
 									
-									if( valBit[ x]) oData[ i*16 + x] = 0xFF;
-									else oData[ i*16 + x] = 0;
+									if( v)
+										*oD = 0xFF;
+									
+									oD++;
 								}
 							}
 						}
@@ -795,7 +803,7 @@ extern short Altivec;
 									
 									newSize.width = ceil( [rep bounds].size.width * 1.5);		// Increase PDF resolution to 72 * X DPI !
 									newSize.height = ceil( [rep bounds].size.height * 1.5);		// KEEP THIS VALUE IN SYNC WITH DICOMFILE.M
-									
+                                    
 									[pdfImage setScalesWhenResized:YES];
 									[pdfImage setSize: newSize];
 									
@@ -825,7 +833,7 @@ extern short Altivec;
 					{
 #ifdef OSIRIX_VIEWER
 #ifndef OSIRIX_LIGHT
-						
+                        
 						@try
 						{
 							if( [[NSFileManager defaultManager] fileExistsAtPath: @"/tmp/dicomsr_osirix/"] == NO)
@@ -855,7 +863,7 @@ extern short Altivec;
 							}
 							
 							NSPDFImageRep *rep = [NSPDFImageRep imageRepWithData: [NSData dataWithContentsOfFile: [htmlpath stringByAppendingPathExtension: @"pdf"]]];
-							
+                            
 							[rep setCurrentPage: frameNo];	
 							
 							NSImage *pdfImage = [[[NSImage alloc] init] autorelease];
@@ -878,14 +886,14 @@ extern short Altivec;
 							NSLog( @"***** exception in %s: %@", __PRETTY_FUNCTION__, e);
 						}
 #else
-						[self getDataFromNSImage: [NSImage imageNamed: @"NSIconViewTemplate"]];
-						returnValue = YES;
+                        [self getDataFromNSImage: [NSImage imageNamed: @"NSIconViewTemplate"]];
+                        returnValue = YES;
 #endif
 #else
-						[self getDataFromNSImage: [NSImage imageNamed: @"NSIconViewTemplate"]];
-						returnValue = YES;
+                        [self getDataFromNSImage: [NSImage imageNamed: @"NSIconViewTemplate"]];
+                        returnValue = YES;
 #endif
-						
+                        
 					}
 					else
 					{
@@ -895,320 +903,318 @@ extern short Altivec;
 						// then goto group 0x7FE0 
 						if ((err = Papy3GotoGroupNb0x7FE0 (fileNb, &theGroupP)) > 0) 
 						{
-							if( bitsStored == 8 && bitsAllocated == 16 && gArrPhotoInterpret[ fileNb] == RGB)
-								bitsAllocated = 8;
-							
-							oImage = (short*) Papy3GetPixelData (fileNb, imageNb, theGroupP, gUseJPEGColorSpace, &fPlanarConf);
-							
-							[PapyrusLock unlock];
-							toBeUnlocked = NO;
-							
-							if( oImage == nil)
-							{
-								NSLog(@"This is really bad..... Please send this file to rossetantoine@bluewin.ch");
-								goImageSize[ fileNb] = height * width * 8; // *8 in case of a 16-bit RGB encoding....
-								oImage = malloc( goImageSize[ fileNb]);
-								
-								long yo = 0;
-								for( i = 0 ; i < height * width * 4; i++)
-								{
-									oImage[ i] = yo++;
-									if( yo>= width) yo = 0;
-								}
-							}
-							
-							if( gArrPhotoInterpret [fileNb] == MONOCHROME1) // INVERSE IMAGE!
-							{
-								if( [modalityString isEqualToString:@"PT"] == YES || ([[NSUserDefaults standardUserDefaults] boolForKey:@"OpacityTableNM"] == YES && [modalityString isEqualToString:@"NM"] == YES))
-								{
-									inverseVal = NO;
-								}
-								else
-								{
-									inverseVal = YES;
-									savedWL = -savedWL;
-								}
-							}
-							else inverseVal = NO;
-							
-							isRGB = NO;
-							
-							if (gArrPhotoInterpret [fileNb] == YBR_FULL ||
-								gArrPhotoInterpret [fileNb] == YBR_FULL_422 ||
-								gArrPhotoInterpret [fileNb] == YBR_PARTIAL_422)
-							{
-								//							NSLog(@"YBR WORLD");
-								
-								char *rgbPixel = (char*) [self ConvertYbrToRgb:(unsigned char *) oImage :width :height :gArrPhotoInterpret [fileNb] :(char) fPlanarConf];
-								fPlanarConf = 0;	//ConvertYbrToRgb -> planar is converted
-								
-								efree3 ((void **) &oImage);
-								oImage = (short*) rgbPixel;
-								goImageSize[ fileNb] = width * height * 3;
-							}
-							
-							// This image has a palette -> Convert it to a RGB image !
-							if( fSetClut)
-							{
-								if( clutRed != nil && clutGreen != nil && clutBlue != nil)
-								{
-									unsigned char   *bufPtr = (unsigned char*) oImage;
-									unsigned short	*bufPtr16 = (unsigned short*) oImage;
-									unsigned char   *tmpImage;
-									int				totSize, pixelR, pixelG, pixelB, x, y;
-									
-									totSize = (int) ((int) height * (int) width * 3L);
-									tmpImage = malloc( totSize);
-									
-									fPlanarConf = NO;
-									
-									//	if( bitsAllocated != 8) NSLog(@"Palette with a non-8 bit image???");
-									
-									switch( bitsAllocated)
-									{
-										case 8:
-											for( y = 0; y < height; y++)
-											{
-												for( x = 0; x < width; x++)
-												{
-													pixelR = pixelG = pixelB = bufPtr[y*width + x];
-													
-													if( pixelR > clutEntryR) {	pixelR = clutEntryR-1;}
-													if( pixelG > clutEntryG) {	pixelG = clutEntryG-1;}
-													if( pixelB > clutEntryB) {	pixelB = clutEntryB-1;}
-													
-													tmpImage[y*width*3 + x*3 + 0] = clutRed[ pixelR];
-													tmpImage[y*width*3 + x*3 + 1] = clutGreen[ pixelG];
-													tmpImage[y*width*3 + x*3 + 2] = clutBlue[ pixelB];
-												}
-											}
-											break;
-											
-										case 16:
+                            if( bitsStored == 8 && bitsAllocated == 16 && gArrPhotoInterpret[ fileNb] == RGB)
+                                bitsAllocated = 8;
+                            
+                            oImage = (short*) Papy3GetPixelData (fileNb, imageNb, theGroupP, gUseJPEGColorSpace, &fPlanarConf);
+                            
+                            [PapyrusLock unlock];
+                            toBeUnlocked = NO;
+                            
+                            if( oImage == nil)
+                            {
+                                NSLog(@"This is really bad..... Please send this file to rossetantoine@bluewin.ch");
+                                goImageSize[ fileNb] = height * width * 8; // *8 in case of a 16-bit RGB encoding....
+                                oImage = malloc( goImageSize[ fileNb]);
+                                
+                                long yo = 0;
+                                for( i = 0 ; i < height * width * 4; i++)
+                                {
+                                    oImage[ i] = yo++;
+                                    if( yo>= width) yo = 0;
+                                }
+                            }
+                            
+                            if( gArrPhotoInterpret [fileNb] == MONOCHROME1) // INVERSE IMAGE!
+                            {
+                                if( [modalityString isEqualToString:@"PT"] == YES || ([[NSUserDefaults standardUserDefaults] boolForKey:@"OpacityTableNM"] == YES && [modalityString isEqualToString:@"NM"] == YES))
+                                {
+                                    inverseVal = NO;
+                                }
+                                else
+                                {
+                                    inverseVal = YES;
+                                    savedWL = -savedWL;
+                                }
+                            }
+                            else inverseVal = NO;
+                            
+                            isRGB = NO;
+                            
+                            if (gArrPhotoInterpret [fileNb] == YBR_FULL ||
+                                gArrPhotoInterpret [fileNb] == YBR_FULL_422 ||
+                                gArrPhotoInterpret [fileNb] == YBR_PARTIAL_422)
+                            {
+                                //							NSLog(@"YBR WORLD");
+                                
+                                char *rgbPixel = (char*) [self ConvertYbrToRgb:(unsigned char *) oImage :width :height :gArrPhotoInterpret [fileNb] :(char) fPlanarConf];
+                                fPlanarConf = 0;	//ConvertYbrToRgb -> planar is converted
+                                
+                                efree3 ((void **) &oImage);
+                                oImage = (short*) rgbPixel;
+                                goImageSize[ fileNb] = width * height * 3;
+                            }
+                            
+                            // This image has a palette -> Convert it to a RGB image !
+                            if( fSetClut)
+                            {
+                                if( clutRed != nil && clutGreen != nil && clutBlue != nil)
+                                {
+                                    unsigned char   *bufPtr = (unsigned char*) oImage;
+                                    unsigned short	*bufPtr16 = (unsigned short*) oImage;
+                                    unsigned char   *tmpImage;
+                                    int				totSize, pixelR, pixelG, pixelB, x, y;
+                                    
+                                    totSize = (int) ((int) height * (int) width * 3L);
+                                    tmpImage = malloc( totSize);
+                                    
+                                    fPlanarConf = NO;
+                                    
+                                    //	if( bitsAllocated != 8) NSLog(@"Palette with a non-8 bit image???");
+                                    
+                                    switch( bitsAllocated)
+                                    {
+                                        case 8:
+                                            for( y = 0; y < height; y++)
+                                            {
+                                                for( x = 0; x < width; x++)
+                                                {
+                                                    pixelR = pixelG = pixelB = bufPtr[y*width + x];
+                                                    
+                                                    if( pixelR > clutEntryR) {	pixelR = clutEntryR-1;}
+                                                    if( pixelG > clutEntryG) {	pixelG = clutEntryG-1;}
+                                                    if( pixelB > clutEntryB) {	pixelB = clutEntryB-1;}
+                                                    
+                                                    tmpImage[y*width*3 + x*3 + 0] = clutRed[ pixelR];
+                                                    tmpImage[y*width*3 + x*3 + 1] = clutGreen[ pixelG];
+                                                    tmpImage[y*width*3 + x*3 + 2] = clutBlue[ pixelB];
+                                                }
+                                            }
+                                            break;
+                                            
+                                        case 16:
 #if __BIG_ENDIAN__
-											// Yang
-//											InverseShorts( (vector unsigned short*) oImage, height * width);
+                                            InverseShorts( (vector unsigned short*) oImage, height * width);
 #endif
-											
-											for( y = 0; y < height; y++)
-											{
-												for( x = 0; x < width; x++)
-												{
-													pixelR = pixelG = pixelB = bufPtr16[y*width + x];
-													
-													//	if( pixelR > clutEntryR) {	pixelR = clutEntryR-1;}
-													//	if( pixelG > clutEntryG) {	pixelG = clutEntryG-1;}
-													//	if( pixelB > clutEntryB) {	pixelB = clutEntryB-1;}
-													
-													tmpImage[y*width*3 + x*3 + 0] = clutRed[ pixelR];
-													tmpImage[y*width*3 + x*3 + 1] = clutGreen[ pixelG];
-													tmpImage[y*width*3 + x*3 + 2] = clutBlue[ pixelB];
-												}
-											}
-											bitsAllocated = 8;
-											break;
-									}
-									
-									isRGB = YES;
-									
-									efree3 ((void **) &oImage);
-									oImage = (short*) tmpImage;
-									goImageSize[ fileNb] = width * height * 3;
-								}
-							}
-							
-							if( fSetClut16)
-							{
-								unsigned short	*bufPtr = (unsigned short*) oImage;
-								unsigned char   *tmpImage;
-								int				totSize, x, y, ii;
-								unsigned short pixel;
-								
-								fPlanarConf = NO;
-								
-								totSize = (int) ((int) height * (int) width * 3L);
-								tmpImage = malloc( totSize);
-								
-								if( bitsAllocated != 16) NSLog(@"Segmented Palette with a non-16 bit image???");
-								
-								ii = height * width;
-								
+                                            
+                                            for( y = 0; y < height; y++)
+                                            {
+                                                for( x = 0; x < width; x++)
+                                                {
+                                                    pixelR = pixelG = pixelB = bufPtr16[y*width + x];
+                                                    
+                                                    //	if( pixelR > clutEntryR) {	pixelR = clutEntryR-1;}
+                                                    //	if( pixelG > clutEntryG) {	pixelG = clutEntryG-1;}
+                                                    //	if( pixelB > clutEntryB) {	pixelB = clutEntryB-1;}
+                                                    
+                                                    tmpImage[y*width*3 + x*3 + 0] = clutRed[ pixelR];
+                                                    tmpImage[y*width*3 + x*3 + 1] = clutGreen[ pixelG];
+                                                    tmpImage[y*width*3 + x*3 + 2] = clutBlue[ pixelB];
+                                                }
+                                            }
+                                            bitsAllocated = 8;
+                                            break;
+                                    }
+                                    
+                                    isRGB = YES;
+                                    
+                                    efree3 ((void **) &oImage);
+                                    oImage = (short*) tmpImage;
+                                    goImageSize[ fileNb] = width * height * 3;
+                                }
+                            }
+                            
+                            if( fSetClut16)
+                            {
+                                unsigned short	*bufPtr = (unsigned short*) oImage;
+                                unsigned char   *tmpImage;
+                                int				totSize, x, y, ii;
+                                unsigned short pixel;
+                                
+                                fPlanarConf = NO;
+                                
+                                totSize = (int) ((int) height * (int) width * 3L);
+                                tmpImage = malloc( totSize);
+                                
+                                if( bitsAllocated != 16) NSLog(@"Segmented Palette with a non-16 bit image???");
+                                
+                                ii = height * width;
+                                
 #if __ppc__ || __ppc64__
-								if( Altivec)
-								{	//Yang
-//									InverseShorts( (vector unsigned short*) oImage, ii);
-								}
-								else
+                                if( Altivec)
+                                {
+                                    InverseShorts( (vector unsigned short*) oImage, ii);
+                                }
+                                else
 #endif
-									
+                                    
 #if __BIG_ENDIAN__
-								{
-									PapyUShort	 *theUShortP = (PapyUShort *) oImage;
-									PapyUShort val;
-									
-									while( ii-- > 0)
-									{
-										val = *theUShortP;
-										*theUShortP++ = (val >> 8) | (val << 8);   // & 0x00FF  --  & 0xFF00
-									}
-								}
+                                {
+                                    PapyUShort	 *theUShortP = (PapyUShort *) oImage;
+                                    PapyUShort val;
+                                    
+                                    while( ii-- > 0)
+                                    {
+                                        val = *theUShortP;
+                                        *theUShortP++ = (val >> 8) | (val << 8);   // & 0x00FF  --  & 0xFF00
+                                    }
+                                }
 #endif
-								
-								for( y = 0; y < height; y++)
-								{
-									for( x = 0; x < width; x++)
-									{
-										pixel = bufPtr[y*width + x];
-										tmpImage[y*width*3 + x*3 + 0] = shortRed[ pixel];
-										tmpImage[y*width*3 + x*3 + 1] = shortGreen[ pixel];
-										tmpImage[y*width*3 + x*3 + 2] = shortBlue[ pixel];
-									}
-								}
-								
-								isRGB = YES;
-								bitsAllocated = 8;
-								
-								efree3 ((void **) &oImage);
-								oImage = (short*) tmpImage;
-								goImageSize[ fileNb] = width * height * 3;
-								
-								free( shortRed);
-								free( shortGreen);
-								free( shortBlue);
-							}
-							
-							// we need to know how the pixels are stored
-							if (isRGB == YES ||
-								gArrPhotoInterpret [fileNb] == RGB ||
-								gArrPhotoInterpret [fileNb] == YBR_FULL ||
-								gArrPhotoInterpret [fileNb] == YBR_FULL_422 ||
-								gArrPhotoInterpret [fileNb] == YBR_PARTIAL_422 ||
-								gArrPhotoInterpret [fileNb] == YBR_ICT ||
-								gArrPhotoInterpret [fileNb] == YBR_RCT)
-							{
-								unsigned char   *ptr, *tmpImage;
-								int				loop, totSize;
-								
-								isRGB = YES;
-								
-								// CONVERT RGB TO ARGB FOR BETTER PERFORMANCE THRU VIMAGE
-								{
-									totSize = (int) ((int) height * (int) width * 4L);
-									tmpImage = malloc( totSize);
-									if( tmpImage)
-									{
-										ptr    = tmpImage;
-										
-										if( bitsAllocated > 8) // RGB - 16 bits
-										{
-											unsigned short   *bufPtr;
-											bufPtr = (unsigned short*) oImage;
-											
+                                
+                                for( y = 0; y < height; y++)
+                                {
+                                    for( x = 0; x < width; x++)
+                                    {
+                                        pixel = bufPtr[y*width + x];
+                                        tmpImage[y*width*3 + x*3 + 0] = shortRed[ pixel];
+                                        tmpImage[y*width*3 + x*3 + 1] = shortGreen[ pixel];
+                                        tmpImage[y*width*3 + x*3 + 2] = shortBlue[ pixel];
+                                    }
+                                }
+                                
+                                isRGB = YES;
+                                bitsAllocated = 8;
+                                
+                                efree3 ((void **) &oImage);
+                                oImage = (short*) tmpImage;
+                                goImageSize[ fileNb] = width * height * 3;
+                                
+                                free( shortRed);
+                                free( shortGreen);
+                                free( shortBlue);
+                            }
+                            
+                            // we need to know how the pixels are stored
+                            if (isRGB == YES ||
+                                gArrPhotoInterpret [fileNb] == RGB ||
+                                gArrPhotoInterpret [fileNb] == YBR_FULL ||
+                                gArrPhotoInterpret [fileNb] == YBR_FULL_422 ||
+                                gArrPhotoInterpret [fileNb] == YBR_PARTIAL_422 ||
+                                gArrPhotoInterpret [fileNb] == YBR_ICT ||
+                                gArrPhotoInterpret [fileNb] == YBR_RCT)
+                            {
+                                unsigned char   *ptr, *tmpImage;
+                                int				loop, totSize;
+                                
+                                isRGB = YES;
+                                
+                                // CONVERT RGB TO ARGB FOR BETTER PERFORMANCE THRU VIMAGE
+                                {
+                                    totSize = (int) ((int) height * (int) width * 4L);
+                                    tmpImage = malloc( totSize);
+                                    if( tmpImage)
+                                    {
+                                        ptr    = tmpImage;
+                                        
+                                        if( bitsAllocated > 8) // RGB - 16 bits
+                                        {
+                                            unsigned short   *bufPtr;
+                                            bufPtr = (unsigned short*) oImage;
+                                            
 #if __BIG_ENDIAN__
-											// Yang
-//											InverseShorts( (vector unsigned short*) oImage, height * width * 3);
+                                            InverseShorts( (vector unsigned short*) oImage, height * width * 3);
 #endif
-											
-											if( fPlanarConf > 0)	// PLANAR MODE
-											{
-												int imsize = (int) height * (int) width;
-												int x = 0;
-												
-												loop = totSize/4;
-												while( loop-- > 0)
-												{
-													*ptr++	= 255;			//ptr++;
-													*ptr++	= bufPtr[ 0 * imsize + x];		//ptr++;  bufPtr++;
-													*ptr++	= bufPtr[ 1 * imsize + x];		//ptr++;  bufPtr++;
-													*ptr++	= bufPtr[ 2 * imsize + x];		//ptr++;  bufPtr++;
-													
-													x++;
-												}
-											}
-											else
-											{
-												loop = totSize/4;
-												while( loop-- > 0)
-												{
-													*ptr++	= 255;			//ptr++;
-													*ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
-													*ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
-													*ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
-												}
-											}
-										}
-										else
-										{
-											unsigned char   *bufPtr;
-											bufPtr = (unsigned char*) oImage;
-											
-											if( fPlanarConf > 0)	// PLANAR MODE
-											{
-												int imsize = (int) height * (int) width;
-												int x = 0;
-												
-												loop = totSize/4;
-												while( loop-- > 0)
-												{
-													*ptr++	= 255;			//ptr++;
-													*ptr++	= bufPtr[ 0 * imsize + x];		//ptr++;  bufPtr++;
-													*ptr++	= bufPtr[ 1 * imsize + x];		//ptr++;  bufPtr++;
-													*ptr++	= bufPtr[ 2 * imsize + x];		//ptr++;  bufPtr++;
-													
-													x++;
-												}
-											}
-											else
-											{
-												loop = totSize/4;
-												while( loop-- > 0)
-												{
-													*ptr++	= 255;
-													*ptr++	= *bufPtr++;
-													*ptr++	= *bufPtr++;
-													*ptr++	= *bufPtr++;
-												}
-											}
-										}
-										efree3 ((void **) &oImage);
-										oImage = (short*) tmpImage;
-										goImageSize[ fileNb] = width * height * 4;
-									}
-								}
-							}
-							else if( bitsAllocated == 8)	// Black & White 8 bit image -> 16 bits image
-							{
-								unsigned char   *bufPtr;
-								short			*ptr, *tmpImage;
-								int				loop, totSize;
-								
-								totSize = (int) ((int) height * (int) width * 2L);
-								tmpImage = malloc( totSize);
-								
-								bufPtr = (unsigned char*) oImage;
-								ptr    = tmpImage;
-								
-								loop = totSize/2;
-								while( loop-- > 0)
-								{
-									*ptr++ = *bufPtr++;
-								}
-								
-								efree3 ((void **) &oImage);
-								oImage =  (short*) tmpImage;
-								goImageSize[ fileNb] = height * (int) width * 2L;
-							}
-							
-							//if( fIsSigned == YES && 
-							
-							[PapyrusLock lock];
-							// free group 7FE0 
-							err = Papy3GroupFree (&theGroupP, TRUE);
-							[PapyrusLock unlock];
+                                            
+                                            if( fPlanarConf > 0)	// PLANAR MODE
+                                            {
+                                                int imsize = (int) height * (int) width;
+                                                int x = 0;
+                                                
+                                                loop = totSize/4;
+                                                while( loop-- > 0)
+                                                {
+                                                    *ptr++	= 255;			//ptr++;
+                                                    *ptr++	= bufPtr[ 0 * imsize + x];		//ptr++;  bufPtr++;
+                                                    *ptr++	= bufPtr[ 1 * imsize + x];		//ptr++;  bufPtr++;
+                                                    *ptr++	= bufPtr[ 2 * imsize + x];		//ptr++;  bufPtr++;
+                                                    
+                                                    x++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                loop = totSize/4;
+                                                while( loop-- > 0)
+                                                {
+                                                    *ptr++	= 255;			//ptr++;
+                                                    *ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
+                                                    *ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
+                                                    *ptr++	= *bufPtr++;		//ptr++;  bufPtr++;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            unsigned char   *bufPtr;
+                                            bufPtr = (unsigned char*) oImage;
+                                            
+                                            if( fPlanarConf > 0)	// PLANAR MODE
+                                            {
+                                                int imsize = (int) height * (int) width;
+                                                int x = 0;
+                                                
+                                                loop = totSize/4;
+                                                while( loop-- > 0)
+                                                {
+                                                    *ptr++	= 255;			//ptr++;
+                                                    *ptr++	= bufPtr[ 0 * imsize + x];		//ptr++;  bufPtr++;
+                                                    *ptr++	= bufPtr[ 1 * imsize + x];		//ptr++;  bufPtr++;
+                                                    *ptr++	= bufPtr[ 2 * imsize + x];		//ptr++;  bufPtr++;
+                                                    
+                                                    x++;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                loop = totSize/4;
+                                                while( loop-- > 0)
+                                                {
+                                                    *ptr++	= 255;
+                                                    *ptr++	= *bufPtr++;
+                                                    *ptr++	= *bufPtr++;
+                                                    *ptr++	= *bufPtr++;
+                                                }
+                                            }
+                                        }
+                                        efree3 ((void **) &oImage);
+                                        oImage = (short*) tmpImage;
+                                        goImageSize[ fileNb] = width * height * 4;
+                                    }
+                                }
+                            }
+                            else if( bitsAllocated == 8)	// Black & White 8 bit image -> 16 bits image
+                            {
+                                unsigned char   *bufPtr;
+                                short			*ptr, *tmpImage;
+                                int				loop, totSize;
+                                
+                                totSize = (int) ((int) height * (int) width * 2L);
+                                tmpImage = malloc( totSize);
+                                
+                                bufPtr = (unsigned char*) oImage;
+                                ptr    = tmpImage;
+                                
+                                loop = totSize/2;
+                                while( loop-- > 0)
+                                {
+                                    *ptr++ = *bufPtr++;
+                                }
+                                
+                                efree3 ((void **) &oImage);
+                                oImage =  (short*) tmpImage;
+                                goImageSize[ fileNb] = height * (int) width * 2L;
+                            }
+                            
+                            //if( fIsSigned == YES && 
+                            
+                            [PapyrusLock lock];
+                            // free group 7FE0 
+                            err = Papy3GroupFree (&theGroupP, TRUE);
+                            [PapyrusLock unlock];
 						}
-						
+                        
 #pragma mark RGB or fPlanar
-						
+                        
 						//***********
 						if( isRGB)
 						{
@@ -1244,6 +1250,7 @@ extern short Altivec;
 						{
 							if( bitsAllocated == 32)  // 32-bit float or 32-bit integers
 							{
+                                NSLog(@"Swizzle loadDICOMPapyrus self:%@", self);
 								if( fExternalOwnedImage)
 									fImage = fExternalOwnedImage;
 								else
@@ -1259,30 +1266,31 @@ extern short Altivec;
 										int *sint = (int*) oImage;
 										float *tDestF = fImage;
 										double dOffset = offset, dSlope = slope;
-										
-										float *sfloat = (float *)oImage;
+                                        
+                                        
 										if([[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"]){
+											float *sfloat = (float *)oImage;
 											unsigned long x = height * width;
 											while(x-- > 0)
 												*tDestF++ = (*sfloat++)*slope + offset;
 										}
-										else if( fIsSigned > 0)											
+										else if( fIsSigned > 0)
 										{
 											unsigned long x = height * width;
 											while( x-- > 0)
-												*tDestF++ = ((double) (*sint++)) * dSlope + dOffset;
+												*tDestF++ = (((double) (*sint++)) + dOffset) * dSlope;
 										}
 										else
 										{
 											unsigned long x = height * width;
 											while( x-- > 0)
-												*tDestF++ = ((double) (*usint++)) * dSlope + dOffset;
+												*tDestF++ = (((double) (*usint++)) + dOffset) * dSlope;
 										}
 									}
 								}
 								else
 									NSLog( @"*** Not enough memory - malloc failed");
-								
+                                
 								free(oImage);
 								oImage = nil;
 							}
@@ -1336,14 +1344,43 @@ extern short Altivec;
 							
 							if( oData && gDisplayDICOMOverlays && fImage)
 							{
-								int			y, x;
+								int y, x;
+								float maxValue = 0;
 								
-								for( y = 0; y < oRows; y++)
+								if( inverseVal)
+									maxValue = -offset;
+								else
 								{
-									for( x = 0; x < oColumns; x++)
+									maxValue = pow( 2, bitsStored);
+									maxValue *= slope;
+									maxValue += offset;
+								}
+								
+								if( oColumns == width)
+								{
+									register unsigned long x = oRows * oColumns;
+									register unsigned char *d = oData;
+									register float *ffI = fImage;
+									
+									while( x-- > 0)
 									{
-										if( oData[ y * oColumns + x]) fImage[ y * width + x] = 0xFF;
+										if( *d++)
+											*ffI = maxValue;
+										ffI++;
 									}
+								}
+								else
+								{
+									NSLog( @"-- oColumns != width");
+									
+									for( int y = 0; y < oRows; y++)
+									{
+										for( int x = 0; x < oColumns; x++)
+										{
+											if( oData[ y * oColumns + x]) fImage[ y * width + x] = maxValue;
+										}
+									}
+									
 								}
 							}
 						}
@@ -1409,8 +1446,11 @@ extern short Altivec;
 	[purgeCacheLock lock];
 	[purgeCacheLock unlockWithCondition: [purgeCacheLock condition]-1];
 	
+    
+    NSLog(@"Swizzle self at the end:%@",self);
 	return returnValue;
 }
+
 
 
 @end

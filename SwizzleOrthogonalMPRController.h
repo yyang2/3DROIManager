@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Osirix Headers/OrthogonalMPRController.h>
+#import <OsirixAPI/OrthogonalMPRController.h>
 
 @interface SwizzleOrthogonalMPRController : OrthogonalMPRController {
 

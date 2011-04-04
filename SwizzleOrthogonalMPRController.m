@@ -7,8 +7,8 @@
 //
 
 #import "SwizzleOrthogonalMPRController.h"
-#import <OsiriX Headers/ROI.h>
-#import <OsiriX Headers/DCMView.h> //
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/DCMView.h> //
 
 @implementation SwizzleOrthogonalMPRController
 

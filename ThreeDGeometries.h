@@ -39,7 +39,7 @@
 - (void)moveWindow:(NSNotification*)note;
 - (IBAction) make3DObject: (id)sender;
 
-- (ROI*)RoiInOrthoView :(NSString*)origin;
+- (ROI*)RoiInOrthoView :(NSMutableString**)origin;
 - (ROI*)makePointForOval:(ROI*)circle;
 - (NSDictionary*) get2DCoordinates: (float) threeDx: (float) threeDy: (float) threeDz;
 - (void) getPosition: (id) sender : (NSRect*) trueposition : (ROI*) planarPositionROI:(ROI*) threeDPositionROI : (int*) sliceZ: (int) lastoffset;

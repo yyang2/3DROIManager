@@ -22,8 +22,10 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		ABA48A650680BB600089EB4F /* ThreeDROIManagerFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABA48A670680BB690089EB4F /* ThreeDROIManagerFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */; };
+		C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */; };
+		C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */; };
 		C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */ = {isa = PBXBuildFile; fileRef = DD90230211C7E23100821250 /* OsiriX.framework */; };
-		C5DE13C712516F540033CE30 /* OsiriX Headers.framework in Resources */ = {isa = PBXBuildFile; fileRef = DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */; };
+		C5DE13C712516F540033CE30 /* OsiriXAPI.framework in Resources */ = {isa = PBXBuildFile; fileRef = DDAE74FD120C7DC200BC3843 /* OsiriXAPI.framework */; };
 		C5E5E14013303A7B00304430 /* SwizzleDCMView.h in Headers */ = {isa = PBXBuildFile; fileRef = C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */; };
 		C5E5E14113303A7B00304430 /* SwizzleDCMView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */; };
 		C5F89F4412F0BAC10066D542 /* SwizzleROIVolume.h in Headers */ = {isa = PBXBuildFile; fileRef = C5F89F4212F0BAC10066D542 /* SwizzleROIVolume.h */; };
@@ -1650,6 +1652,8 @@
 		DD33792F12FB7018003BCCAE /* VRView+Yang.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD33792D12FB7018003BCCAE /* VRView+Yang.mm */; };
 		DD3A57B31199F18A00ED9FF0 /* CLUTBar.h in Headers */ = {isa = PBXBuildFile; fileRef = DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD3A57B41199F18A00ED9FF0 /* CLUTBar.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3A57B21199F18A00ED9FF0 /* CLUTBar.m */; };
+		DD740B0F1343D87B007F1EAD /* SwizzleROI.h in Headers */ = {isa = PBXBuildFile; fileRef = DD740B0D1343D87B007F1EAD /* SwizzleROI.h */; };
+		DD740B101343D87B007F1EAD /* SwizzleROI.m in Sources */ = {isa = PBXBuildFile; fileRef = DD740B0E1343D87B007F1EAD /* SwizzleROI.m */; };
 		DD7F4BA713144E4B001C3462 /* SM2DGraphView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDE02CC712A45871002CE8E7 /* SM2DGraphView.framework */; };
 		DD85E06311878F190025BE95 /* 2DBlending.tif in Resources */ = {isa = PBXBuildFile; fileRef = DD85E06211878F190025BE95 /* 2DBlending.tif */; };
 		DD90230811C7E25500821250 /* VRController+Yang.h in Headers */ = {isa = PBXBuildFile; fileRef = DD90230611C7E25500821250 /* VRController+Yang.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1718,6 +1722,8 @@
 		AB5D36050680E57E00F4007A /* 3DROIManager.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3DROIManager.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ThreeDROIManagerFilter.h; sourceTree = "<group>"; };
 		ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ThreeDROIManagerFilter.mm; sourceTree = "<group>"; };
+		C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleBonjourBrowser.h; sourceTree = "<group>"; };
+		C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleBonjourBrowser.m; sourceTree = "<group>"; };
 		C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleDCMView.h; sourceTree = "<group>"; };
 		C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleDCMView.m; sourceTree = "<group>"; };
 		C5F89F4212F0BAC10066D542 /* SwizzleROIVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleROIVolume.h; sourceTree = "<group>"; };
@@ -3344,11 +3350,13 @@
 		DD33792D12FB7018003BCCAE /* VRView+Yang.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "VRView+Yang.mm"; sourceTree = "<group>"; };
 		DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLUTBar.h; sourceTree = "<group>"; };
 		DD3A57B21199F18A00ED9FF0 /* CLUTBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLUTBar.m; sourceTree = "<group>"; };
+		DD740B0D1343D87B007F1EAD /* SwizzleROI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwizzleROI.h; path = 3DROIManager.xcodeproj/SwizzleROI.h; sourceTree = "<group>"; };
+		DD740B0E1343D87B007F1EAD /* SwizzleROI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwizzleROI.m; path = 3DROIManager.xcodeproj/SwizzleROI.m; sourceTree = "<group>"; };
 		DD85E06211878F190025BE95 /* 2DBlending.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = 2DBlending.tif; sourceTree = "<group>"; };
 		DD90230211C7E23100821250 /* OsiriX.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OsiriX.framework; path = ../../osirix/osirix/build/Development/OsiriX.framework; sourceTree = SOURCE_ROOT; };
 		DD90230611C7E25500821250 /* VRController+Yang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VRController+Yang.h"; sourceTree = "<group>"; };
 		DD90230711C7E25500821250 /* VRController+Yang.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "VRController+Yang.m"; sourceTree = "<group>"; };
-		DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "OsiriX Headers.framework"; path = "../../osirix/osirix/build/Development/OsiriX Headers.framework"; sourceTree = SOURCE_ROOT; };
+		DDAE74FD120C7DC200BC3843 /* OsiriXAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = OsiriXAPI.framework; path = ../../osirix/osirix/build/Development/OsiriXAPI.framework; sourceTree = SOURCE_ROOT; };
 		DDE02CC712A45871002CE8E7 /* SM2DGraphView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; path = SM2DGraphView.framework; sourceTree = "<group>"; };
 		DDE702AA12F09C7400E73161 /* PapyWild3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PapyWild3.h; path = Papyrus3/PapyWild3.h; sourceTree = "<group>"; };
 		DDE702AB12F09C7400E73161 /* PapyVars3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PapyVars3.c; path = Papyrus3/PapyVars3.c; sourceTree = "<group>"; };
@@ -3425,7 +3433,7 @@
 			children = (
 				DDE02CC712A45871002CE8E7 /* SM2DGraphView.framework */,
 				DD90230211C7E23100821250 /* OsiriX.framework */,
-				DDAE74FD120C7DC200BC3843 /* OsiriX Headers.framework */,
+				DDAE74FD120C7DC200BC3843 /* OsiriXAPI.framework */,
 				1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */,
 				089C1672FE841209C02AAC07 /* Foundation.framework */,
 				089C167FFE841241C02AAC07 /* AppKit.framework */,
@@ -5155,8 +5163,12 @@
 		DDE7044F12F0D18100E73161 /* Osirix Mods */ = {
 			isa = PBXGroup;
 			children = (
+				DD740B0D1343D87B007F1EAD /* SwizzleROI.h */,
+				DD740B0E1343D87B007F1EAD /* SwizzleROI.m */,
 				C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */,
 				C5E5E13F13303A7B00304430 /* SwizzleDCMView.m */,
+				C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */,
+				C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */,
 				DD90230611C7E25500821250 /* VRController+Yang.h */,
 				DD90230711C7E25500821250 /* VRController+Yang.m */,
 				2716B72F116BAC9D000E1A5A /* DMCPix+Yang.h */,
@@ -6813,6 +6825,8 @@
 				DDE7045A12F0D2E300E73161 /* SwizzleVRView.h in Headers */,
 				DD33792E12FB7018003BCCAE /* VRView+Yang.h in Headers */,
 				C5E5E14013303A7B00304430 /* SwizzleDCMView.h in Headers */,
+				C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */,
+				DD740B0F1343D87B007F1EAD /* SwizzleROI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6870,7 +6884,7 @@
 			files = (
 				DDE02CCB12A45876002CE8E7 /* SM2DGraphView.framework in Resources */,
 				C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */,
-				C5DE13C712516F540033CE30 /* OsiriX Headers.framework in Resources */,
+				C5DE13C712516F540033CE30 /* OsiriXAPI.framework in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				DDFE8F61130322010015387F /* 3DROIManager.xib in Resources */,
 				2716B715116BAC77000E1A5A /* Geometries.xib in Resources */,
@@ -6949,6 +6963,8 @@
 				DDE7045B12F0D2E300E73161 /* SwizzleVRView.mm in Sources */,
 				DD33792F12FB7018003BCCAE /* VRView+Yang.mm in Sources */,
 				C5E5E14113303A7B00304430 /* SwizzleDCMView.m in Sources */,
+				C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */,
+				DD740B101343D87B007F1EAD /* SwizzleROI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7056,7 +7072,7 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
 				LIBRARY_STYLE = Bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
@@ -7101,7 +7117,7 @@
 				INFOPLIST_FILE = Info.plist;
 				LIBRARY_SEARCH_PATHS = "";
 				LIBRARY_STYLE = Bundle;
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-undefined",

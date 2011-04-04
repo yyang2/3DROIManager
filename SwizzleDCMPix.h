@@ -7,11 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX Headers/DCMPix.h>
+#import <OsirixAPI/DCMPix.h>
 
 @interface SwizzleDCMPix : DCMPix {
 
 }
-- (BOOL)loadDICOMDCMFramework;
 - (BOOL) loadDICOMPapyrus;
 @end

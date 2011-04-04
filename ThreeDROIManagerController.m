@@ -9,18 +9,18 @@
 
 #import "ThreeDROIManagerController.h"
 
-#import <OsiriX Headers/Notifications.h>
-#import <OsiriX Headers/ViewerController.h>
+#import <OsirixAPI/Notifications.h>
+#import <OsirixAPI/ViewerController.h>
 #import "ViewerController+Yang.h"
-#import <OsiriX Headers/VRController.h>
-#import <OsiriX Headers/DCMView.h>
-#import <OsiriX Headers/ROI.h>
-#import <OsiriX Headers/DCMPix.h>
+#import <OsirixAPI/VRController.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/DCMPix.h>
 #import "DMCPix+Yang.h"
-#import <OsiriX Headers/OrthogonalMPRController.h>
-#import <OsiriX Headers/OrthogonalMPRPETCTController.h>
-#import <OsiriX Headers/OrthogonalMPRPETCTViewer.h>
-#import <OsiriX Headers/OrthogonalMPRView.h>
+#import <OsirixAPI/OrthogonalMPRController.h>
+#import <OsirixAPI/OrthogonalMPRPETCTController.h>
+#import <OsirixAPI/OrthogonalMPRPETCTViewer.h>
+#import <OsirixAPI/OrthogonalMPRView.h>
 #import "SwizzleDCMView.h"
 #include <OpenGL/CGLMacro.h>
 #include <OpenGL/CGLCurrent.h>
@@ -692,6 +692,18 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		}
 	}
 	return returnvalues;
+}
+
+- (void)setSelectedTableROI:(NSString*)ROIName
+{
+	unsigned int index = 0;
+	for (; index<[curROIlist count]; index++)
+		if ([ROIName isEqualToString: [[[curROIlist objectAtIndex:index] objectForKey: @"roi"] name]]) break;
+
+	if (index < curROIlist.count)
+	{
+		[tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+	}
 }
 
 - (void) UpdateStatistics: (NSNotification *) notification

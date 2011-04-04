@@ -15,8 +15,8 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <Osirix Headers/DCMView.h>
-#import <Osirix Headers/DCMPix.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/DCMPix.h>
 #import <objc/runtime.h>
 #import "ViewerController+Yang.h"
 #import "VRView+Yang.h"
@@ -76,6 +76,8 @@
 - (void) startObservers;
 - (void) initSlider;
 - (void) drawCLUTbar;
+
+- (void)setSelectedTableROI:(NSString*)ROIName;
 
 -(ROI *) ROIForSelectedIndex;
 - (IBAction) exportAllROIs:(id)sender;

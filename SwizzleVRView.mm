@@ -8,11 +8,11 @@
 
 #import "SwizzleVRView.h"
 #import "VRView+Yang.h"
-#import <OsiriX Headers/ROI.h>
-#import <OsiriX Headers/Notifications.h>
-#import <Osirix Headers/DCMPix.h>
-#import <OsiriX Headers/DCMView.h>
-#import <OsiriX Headers/browserController.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/Notifications.h>
+#import <OsirixAPI/DCMPix.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/browserController.h>
 
 
 #define BONEOPACITY 1.1
@@ -29,9 +29,9 @@ static NSRecursiveLock *drawLock = nil;
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	NSLog(@"modified dontRenderVolumeRenderingOsiriX:%i", dontRenderVolumeRenderingOsiriX);
-	NSLog(@"modified snVRView:%@", snVRView);
-	NSLog(@"modified NSRecursiveLock:%@", drawLock);
+//	NSLog(@"modified dontRenderVolumeRenderingOsiriX:%i", dontRenderVolumeRenderingOsiriX);
+//	NSLog(@"modified snVRView:%@", snVRView);
+//	NSLog(@"modified NSRecursiveLock:%@", drawLock);
 	
 	if(drawLock == nil) drawLock = [[NSRecursiveLock alloc] init];
 	snVRView = self;
@@ -442,9 +442,9 @@ static NSRecursiveLock *drawLock = nil;
 			// clicked point (2D coordinate)
 			_mouseLocStart = [self convertPoint: [theEvent locationInWindow] fromView: nil];
 			
-			long pix[ 3];
-			float pos[ 3], value;
-			float minValue = [[NSUserDefaults standardUserDefaults] floatForKey: @"VRGrowingRegionValue"]-[[NSUserDefaults standardUserDefaults] floatForKey: @"VRGrowingRegionInterval"]/3.;
+//			long pix[ 3];
+//			float pos[ 3], value;
+//			float minValue = [[NSUserDefaults standardUserDefaults] floatForKey: @"VRGrowingRegionValue"]-[[NSUserDefaults standardUserDefaults] floatForKey: @"VRGrowingRegionInterval"]/3.;
 			
 //			if( [self get3DPixelUnder2DPositionX:_mouseLocStart.x Y:_mouseLocStart.y pixel:pix position:pos value:&value maxOpacity: BONEOPACITY minValue: minValue])
 //			{

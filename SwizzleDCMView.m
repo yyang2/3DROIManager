@@ -7,10 +7,10 @@
 //
 
 #import "SwizzleDCMView.h"
-#import <Osirix Headers/DCMView.h>
-#import <Osirix Headers/ROI.h>
-#import <Osirix Headers/browserController.h>
-#import <Osirix Headers/Notifications.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/browserController.h>
+#import <OsirixAPI/Notifications.h>
 
 short						syncro = syncroLOC;
 static		BOOL						pluginOverridesMouse = NO;  // Allows plugins to override mouse click actions.

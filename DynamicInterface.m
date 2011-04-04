@@ -7,11 +7,11 @@
 //
 
 #import "DynamicInterface.h"
-#import <OsiriX Headers/ROI.h>
-#import <OsiriX Headers/DCMPix.h>
-#import <OsiriX Headers/DCMView.h>
-#import <OsiriX Headers/ViewerController.h>
-#import <Osirix Headers/Notifications.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/DCMPix.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/ViewerController.h>
+#import <OsirixAPI/Notifications.h>
 #import <SM2DGraphView/SM2DGraphView.h>
 #import "DMCPix+Yang.h"
 #import "viewerController+Yang.h"
@@ -23,7 +23,6 @@
 
 - (id) initWithViewer:(ViewerController*) v:(ROI*)selectedROI
 {
-	
 	self = [super initWithWindowNibName:@"DynamicROI"];
 	if(!self) return nil;
 	
@@ -39,7 +38,6 @@
 	xValues = [NSMutableArray arrayWithCapacity:totalframes];
 	yValues = [NSMutableArray arrayWithCapacity:totalframes];
 	activeROI = [selectedROI retain];
-	NSLog(@"Initializing active ROI: %@", activeROI);
 	TACData = [[NSMutableArray array] retain];
 	timeData = [[NSMutableArray arrayWithCapacity:totalframes] retain];
     

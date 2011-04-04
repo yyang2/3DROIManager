@@ -6,14 +6,14 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 
 #import "ViewerController+Yang.h"
-#import <OsiriX Headers/ViewerController.h>
-#import <OsiriX Headers/Notifications.h>
-#import <Osirix Headers/DCMPix.h>
-#import <Osirix Headers/ROI.h>
-#import <Osirix Headers/DCMView.h>
-#import <OsiriX Headers/WaitRendering.h>
-#import <OsiriX Headers/ROIVolumeController.h>
-#import <Osirix Headers/ITKSegmentation3D.h>
+#import <OsirixAPI/ViewerController.h>
+#import <OsirixAPI/Notifications.h>
+#import <OsirixAPI/DCMPix.h>
+#import <OsirixAPI/ROI.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/WaitRendering.h>
+#import <OsirixAPI/ROIVolumeController.h>
+#import <OsirixAPI/ITKSegmentation3D.h>
 
 
 

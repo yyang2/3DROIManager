@@ -11,18 +11,18 @@
 #import "ITKSegmentation3DController+Yang.h"
 #import "ThreeDROIManagerController.h"
 
-#import <OsiriX Headers/ROI.h>
+#import <OsirixAPI/ROI.h>
 #import "VRController+Yang.h"
-#import <OsiriX Headers/VRView.h>
-#import <OsiriX Headers/ViewerController.h>
-#import <OsiriX Headers/Notifications.h>
-#import <OsiriX Headers/DCMPix.h>
-#import <OsiriX Headers/DCMView.h>
-#import <OsiriX Headers/ITKSegmentation3D.h>
-#import <OsiriX Headers/OrthogonalMPRController.h>
-#import <OsiriX Headers/OrthogonalMPRPETCTController.h>
-#import <OsiriX Headers/OrthogonalMPRPETCTViewer.h>
-#import <OsiriX Headers/OrthogonalMPRView.h>
+#import <OsirixAPI/VRView.h>
+#import <OsirixAPI/ViewerController.h>
+#import <OsirixAPI/Notifications.h>
+#import <OsirixAPI/DCMPix.h>
+#import <OsirixAPI/DCMView.h>
+#import <OsirixAPI/ITKSegmentation3D.h>
+#import <OsirixAPI/OrthogonalMPRController.h>
+#import <OsirixAPI/OrthogonalMPRPETCTController.h>
+#import <OsirixAPI/OrthogonalMPRPETCTViewer.h>
+#import <OsirixAPI/OrthogonalMPRView.h>
 @class ROI;
 
 
@@ -110,6 +110,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 - (BOOL) generateSphere
 {
+	if([diameterText doubleValue] <= 0) return NO;
 	ROI		*threeDROI=nil;
 	ROI		*selectedROI;
 	float	sliceLocation = -1.f;
@@ -129,8 +130,8 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	}
 	
 	// get orthoROI
-	NSString *origin;
-	ROI		*orthoROI = [self RoiInOrthoView:origin];
+	NSMutableString *origin = [NSMutableString string];
+	ROI		*orthoROI = [self RoiInOrthoView:&origin];
 	if(orthoROI)
 	{
 		//check validity of ROI
@@ -318,6 +319,8 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 -(BOOL) makeSphereWithName:(NSString*)name center:(ROI *)center atSlice:(long)currentSlice withRadius:(float)radius
 {
+	if(radius <= 0) return NO;
+	
 	center.locked = NO;
 
 	//checks center name
@@ -391,6 +394,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 -(BOOL)makeEllipseWithName:(NSString*)name center:(ROI*)center atSlice:(long)currentSlice x:(double)xdiam y:(double)ydiam z:(double)zdiam
 {
+	if(xdiam <= 0 || ydiam <= 0 || zdiam <= 0) return NO;
 	center.locked = NO;
 	
 	//checks center name
@@ -507,6 +511,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 -(BOOL)generateEllipse 
 {
+	if([ellpX doubleValue] <= 0 || [ellpY doubleValue] <= 0 || [ellpZ doubleValue] <= 0) return NO;
 	ROI		*threeDROI=nil;
 	ROI		*selectedROI;
 	float	sliceLocation = -1.f;
@@ -526,8 +531,8 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	}
 	
 	// get orthoROI
-	NSString *origin;
-	ROI		*orthoROI = [self RoiInOrthoView:origin];
+	NSMutableString *origin = [NSMutableString string];
+	ROI		*orthoROI = [self RoiInOrthoView:&origin];
 
 	if(orthoROI)
 	{
@@ -870,7 +875,10 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 		
 		return;
 	}
-	
+	else {
+		[controller setSelectedTableROI:threeDROI.name];
+	}
+
 	if([threeDROI.name hasSuffix:@"_center"]) {
 		[tabView selectTabViewItemWithIdentifier:@"sphereView"];
 		[diameterText setFloatValue:[self getSphereDiameter:threeDROI.name]];
@@ -905,8 +913,6 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 - (IBAction) make3DObject: (id)sender
 {
-	NSLog(@"selectedTabView %@", [tabView selectedTabViewItem]);
-	NSLog(@"identifier: %@", [[tabView selectedTabViewItem] identifier]);
 	
 	if([[[tabView selectedTabViewItem] identifier] isEqualToString:@"sphereView"]) 
 	{
@@ -1047,7 +1053,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 }
 
 
--(ROI*)RoiInOrthoView:(NSString*)origin{
+-(ROI*)RoiInOrthoView:(NSMutableString**)origin{
 
 	NSMutableArray *roiarray = [NSMutableArray array];;
 	if(FusionOrthoView != nil){
@@ -1056,30 +1062,30 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	
 		if([[[[FusionOrthoView CTController] originalView] selectedROIs] count] > 0){
 			roiarray = [[[FusionOrthoView CTController] originalView] selectedROIs];
-			origin = @"original";
+			[*origin stringByAppendingFormat:@"original"];
 		}
 		else if([[[[FusionOrthoView CTController] xReslicedView] selectedROIs] count] > 0){
 			roiarray = [[[FusionOrthoView CTController] xReslicedView] selectedROIs];
-			origin = @"xResliced";
+			[*origin stringByAppendingFormat:@"xResliced"];
 		}
 		else if([[[[FusionOrthoView CTController] yReslicedView] selectedROIs] count] > 0){
 			roiarray = [[[FusionOrthoView CTController] yReslicedView] selectedROIs];
-			origin = @"yResliced";
+			[*origin stringByAppendingFormat:@"yResliced"];
 		}
 	}
 	else{
 		//scroll through regular view
 		if([[[(OrthogonalMPRController *)[orthoView controller] originalView] selectedROIs] count]>0){
 			roiarray = [[(OrthogonalMPRController *)[orthoView controller] originalView] selectedROIs];
-			origin = @"original";
+			[*origin stringByAppendingFormat:@"original"];
 		}		
 		else if ([[[(OrthogonalMPRController *)[orthoView controller] xReslicedView] selectedROIs] count] > 0){
 			roiarray = [[(OrthogonalMPRController *)[orthoView controller] xReslicedView] selectedROIs];
-			origin = @"xResliced";
+			[*origin stringByAppendingFormat:@"xResliced"];
 		}
 		else if ([[[(OrthogonalMPRController *)[orthoView controller] yReslicedView] selectedROIs] count] >0){
 			roiarray = [[(OrthogonalMPRController *)[orthoView controller] yReslicedView] selectedROIs];
-			origin = @"yResliced";
+			[*origin stringByAppendingFormat:@"yResliced"];
 		}
 	}
 
@@ -1118,13 +1124,9 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	// find 2D point from 3D position, mostly copy and pasted from [VRController ]
 	while(!found && cur2DPointIndex<[[D3View roi2DPointsArray] count])
 	{
-		NSMutableArray *x = [NSMutableArray array];
-		NSMutableArray *y = [NSMutableArray array];
-		NSMutableArray *z = [NSMutableArray array];
-		
-		x = [D3View Getx2DPointsArray];
-		y = [D3View Gety2DPointsArray];
-		z = [D3View Getz2DPointsArray];
+		NSMutableArray *x = [D3View Getx2DPointsArray];
+		NSMutableArray *y = [D3View Gety2DPointsArray];
+		NSMutableArray *z = [D3View Getz2DPointsArray];
 		
 		float sx = [[x objectAtIndex:cur2DPointIndex] floatValue];
 		float sy = [[y objectAtIndex:cur2DPointIndex] floatValue];

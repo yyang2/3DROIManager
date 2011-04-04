@@ -11,8 +11,9 @@
 #import "SwizzleAppController.h"
 #import "SwizzleROIVolume.h"
 #import "SwizzleOrthogonalMPRController.h"
-
 #import "SwizzleDCMPix.h"
+#import "SwizzleROI.h"
+
 @implementation ThreeDROIManagerFilter
 
 - (void) initPlugin
@@ -44,20 +45,25 @@
 	
 	//swizzle DCMPix
 	
-//	Class DCMPictures	=objc_getClass("DCMPix");
-//	Class SwizzleDCM	=objc_getClass("SwizzleDCMPix");
+	Class DCMPictures	=objc_getClass("DCMPix");
+	Class SwizzleDCM	=objc_getClass("SwizzleDCMPix");
 
-//	Method originalLoad =class_getInstanceMethod(DCMPictures, @selector(loadDICOMDCMFramework));
-//	Method newLoad		=class_getInstanceMethod(SwizzleDCM, @selector(loadDICOMDCMFramework));
-//	IMP newLoadingImp	=method_getImplementation(newLoad);
-//	method_setImplementation(originalLoad,newLoadingImp);
 	
-//	Method OtheroriginalLoad =class_getInstanceMethod(DCMPictures, @selector(loadDICOMPapyrus));
-//	Method OthernewLoad		=class_getInstanceMethod(SwizzleDCM, @selector(loadDICOMPapyrus));
-//	IMP OthernewLoadingImp	=method_getImplementation(OthernewLoad);
+	Method OtheroriginalLoad =class_getInstanceMethod(DCMPictures, @selector(loadDICOMPapyrus));
+	Method OthernewLoad		=class_getInstanceMethod(SwizzleDCM, @selector(loadDICOMPapyrus));
+	IMP OthernewLoadingImp	=method_getImplementation(OthernewLoad);
 //	method_setImplementation(OtheroriginalLoad,OthernewLoadingImp);
 
-	
+    //Swizzle ROI
+    
+    Class ROI = objc_getClass("ROI");
+    Class SwizzROI = objc_getClass("SwizzleROI");
+
+    Method oldDraw = class_getInstanceMethod(ROI, @selector(drawROIWithScaleValue: offsetX:offsetY: pixelSpacingX: pixelSpacingY: highlightIfSelected: thickness: prepareTextualData:));
+    Method newDraw = class_getInstanceMethod(SwizzROI, @selector(drawROIWithScaleValue: offsetX:offsetY: pixelSpacingX: pixelSpacingY: highlightIfSelected: thickness: prepareTextualData:));
+    IMP NewDrawIMP =  method_getImplementation(newDraw);
+    method_setImplementation(oldDraw, NewDrawIMP);
+    
 	//Swizzle OrthogonalMPRController
 	Class Ortho			=	objc_getClass("OrthogonalMPRController");
 	Class SwizzleOrtho	=	objc_getClass("SwizzleOrthogonalMPRController");
@@ -94,16 +100,18 @@
 	Method newremovePoint = class_getInstanceMethod(SwizzleVR, @selector(removeSelected3DPoint));
 	IMP		impremovePoint = method_getImplementation(newremovePoint);
 	method_setImplementation(removePoint, impremovePoint);
-//
-//	Method oldClick = class_getInstanceMethod(VR, @selector(mouseDown:));
-//	Method newClick = class_getInstanceMethod(SwizzleVR, @selector(mouseDown:));
-//	IMP	   newClickImp = method_getImplementation(newClick);
-//	method_setImplementation(oldClick, newClickImp);
 	
 	Method point3DArray = class_getInstanceMethod(SwizzleVR, @selector(get3DPositionArray));
 	IMP		imppoint3DArray = method_getImplementation(point3DArray);
 	class_addMethod(VR, @selector(get3DPositionArray), imppoint3DArray, "v@:");
+
 	
+	Class BonjourBrowser		= objc_getClass("BonjourBrowser");
+	Class SwizBonjourBrowser		= objc_getClass("SwizzleBonjourBrowser");
+	Method oldGetList = class_getInstanceMethod(BonjourBrowser, @selector(buildDICOMDestinationsList));
+	Method newGetList = class_getInstanceMethod(SwizBonjourBrowser, @selector(buildDICOMDestinationsList));
+	IMP	   getListImp = method_getImplementation(newGetList);
+	method_setImplementation(oldGetList, getListImp);
 }
 
 - (long) filterImage:(NSString*) menuName

@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Osirix Headers/AppController.h>
+#import <OsirixAPI/AppController.h>
 
 @interface SwizzleAppController : AppController {
 

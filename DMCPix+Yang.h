@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Osirix Headers/DCMPix.h>
+#import <OsirixAPI/DCMPix.h>
 //Adding accessors to DCMPix to get modality names, frame duration and units
 //used by 3DROIManager
 

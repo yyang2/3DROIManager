@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX Headers/VRView.h>
+#import <OsirixAPI/VRView.h>
 
 @interface VRView (Yang)
 -(NSMutableArray*) get3DPositionArray;

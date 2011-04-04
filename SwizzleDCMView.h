@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Osirix Headers/DCMView.h>
+#import <OsirixAPI/DCMView.h>
 
 @interface SwizzleDCMView : DCMView {
 

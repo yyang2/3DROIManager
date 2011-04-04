@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Osirix Headers/VRController.h>
+#import <OsirixAPI/VRController.h>
 // adds accesors for getting x,y,z position from VRController
 // used by ThreeDGeometries when adding spheres using 3D View
 

@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OsiriX Headers/PluginFilter.h>
+#import <OsirixAPI/PluginFilter.h>
 
 @interface ThreeDROIManagerFilter : PluginFilter {
 

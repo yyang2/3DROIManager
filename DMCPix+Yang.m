@@ -6,7 +6,7 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import <Osirix Headers/DCMPix.h>
+#import <OsirixAPI/DCMPix.h>
 #import "Papyrus3/Papyrus3.h"
 
 @implementation DCMPix (Yang)
