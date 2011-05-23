@@ -132,10 +132,12 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	// get orthoROI
 	NSMutableString *origin = [NSMutableString string];
 	ROI		*orthoROI = [self RoiInOrthoView:&origin];
+    NSLog(@"Check OrthoROI:%@", orthoROI);
 	if(orthoROI)
 	{
 		//check validity of ROI
 		NSArray *temparray = [tempViewer roisWithName:[orthoROI name]];
+        NSLog(@"Check temparray:%@",temparray);
 		if([temparray count] > 1) {
 			threeDROI = [controller centerForOrthoROI:orthoROI];
 			orthoROI=nil;
@@ -206,7 +208,6 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	NSString* name = [nameText stringValue];
 	
 	[self makeSphereWithName:name center:selectedROI atSlice:sliceLocation  withRadius:diam/2.f];
-	[D3View.view unselectAllActors];
 	[self resetsphere];
 	return TRUE;
 	
@@ -611,9 +612,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 	NSString* name = [nameText stringValue];
 	
-	[self makeEllipseWithName:name center:selectedROI atSlice:sliceLocation x:[ellpX doubleValue] y:[ellpY doubleValue] z:[ellpZ doubleValue]];
-	[D3View.view unselectAllActors];
-	return TRUE;
+	[self makeEllipseWithName:name center:selectedROI atSlice:sliceLocation x:[ellpX doubleValue] y:[ellpY doubleValue] z:[ellpZ doubleValue]];	return TRUE;
 }
 
 -(void)getMissingEllipseDimension:(ROI*)current: (NSString *)origin
@@ -845,66 +844,53 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 -(void)moveWindow:(NSNotification*)note
 {
 	
-	ROI *threeDROI;
+	ROI *selectedROI=nil;
 	
-	if ([[note object] objectForKey:@"roi"])
+	if ([[note object] objectForKey:@"roi"] && ([[note userInfo] objectForKey:@"viewer"] == orthoView || [[note userInfo] objectForKey:@"viewer"] == FusionOrthoView))
 	{
-		[D3View.view unselectAllActors];
-		threeDROI = [controller centerForOrthoROI:[[note object] objectForKey:@"roi"]];		
+        [D3View.view unselectAllActors];
+        selectedROI = [controller centerForOrthoROI:[[note object] objectForKey:@"roi"]];
 	}
-	else
+	else if([[note userInfo] objectForKey:@"viewer"] == tempViewer)
 	{
 		int VRSelectedIndex = [[[note object] objectForKey:@"index"] intValue];
-		
-		if(VRSelectedIndex < 0) 
-		{
-			[[self window] orderOut:self];
-			return;
-		}
+    
 		float position[3];
 		[[[D3View.view get3DPositionArray] objectAtIndex:VRSelectedIndex] getValue:position];
 		NSDictionary *temp = [self get2DCoordinates:position[0] :position[1] :position[2]];
-		threeDROI = [temp objectForKey:@"ROI"];
+		selectedROI = [temp objectForKey:@"ROI"];
 	}
-	
-	if (!threeDROI) 
-	{
-		NSPoint pointOnScreen = NSPointFromString([[note object] objectForKey:@"mouse"]);
-		[[self window] orderFront:self];
-		[[self window] setFrameTopLeftPoint:NSMakePoint(pointOnScreen.x + 30, pointOnScreen.y - 30)];
-		
+	else 
+    {
+        [D3View.view unselectAllActors];
+        [[self window] orderOut:self];
 		return;
-	}
-	else {
-		[controller setSelectedTableROI:threeDROI.name];
-	}
+    }
+	
+    
 
-	if([threeDROI.name hasSuffix:@"_center"]) {
+	if([selectedROI.name hasSuffix:@"_center"]) 
+    {
 		[tabView selectTabViewItemWithIdentifier:@"sphereView"];
-		[diameterText setFloatValue:[self getSphereDiameter:threeDROI.name]];
-		[ellpX setDoubleValue:[self getSphereDiameter:threeDROI.name]];
-		[ellpY setDoubleValue:[self getSphereDiameter:threeDROI.name]];
-		[ellpZ setDoubleValue:[self getSphereDiameter:threeDROI.name]];
-		[nameText setStringValue:[self getSphereName:threeDROI.name]];
+		[diameterText setFloatValue:[self getSphereDiameter:selectedROI.name]];
+		[ellpX setDoubleValue:[self getSphereDiameter:selectedROI.name]];
+		[ellpY setDoubleValue:[self getSphereDiameter:selectedROI.name]];
+		[ellpZ setDoubleValue:[self getSphereDiameter:selectedROI.name]];
+		[nameText setStringValue:[self getSphereName:selectedROI.name]];
 	}
-	else if([threeDROI.name hasSuffix:@"_ellipse"])
+	else if([selectedROI.name hasSuffix:@"_ellipse"])
 	{
 		double pos[3];
 		[tabView selectTabViewItemWithIdentifier:@"ellipseView"];
-		[nameText setStringValue:[self getEllipseName:threeDROI.name]];
-		[self getEllipseDimensions:threeDROI.name :&pos[0]];
+		[nameText setStringValue:[self getEllipseName:selectedROI.name]];
+		[self getEllipseDimensions:selectedROI.name :&pos[0]];
 		NSLog(@"pos value:%f %f %f", pos[0], pos[1], pos[2]);
 		[diameterText setDoubleValue:pos[0]];
 		[ellpX setDoubleValue:pos[0]];
 		[ellpY setDoubleValue:pos[1]];
 		[ellpZ setDoubleValue:pos[2]];
-		
 	}
-	else
-	{
-		
-	}
-	
+	[controller setSelectedTableROI:selectedROI.name];
 	NSPoint pointOnScreen = NSPointFromString([[note object] objectForKey:@"mouse"]);
 	[[self window] orderFront:self];
 	[[self window] setFrameTopLeftPoint:NSMakePoint(pointOnScreen.x + 30, pointOnScreen.y - 30)];
@@ -913,7 +899,6 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 
 - (IBAction) make3DObject: (id)sender
 {
-	
 	if([[[tabView selectedTabViewItem] identifier] isEqualToString:@"sphereView"]) 
 	{
 		NSLog(@"sphereView");
@@ -925,7 +910,6 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 		NSLog(@"ellipseView");
 		if([self generateEllipse])
 			[[self window] orderOut:self];
-		
 	}
 	else if([[[tabView selectedTabViewItem] identifier] isEqualToString:@"seedView"]) 
 	{
@@ -935,7 +919,6 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	{
 		NSLog(@"Make 3D Object error: recognized object type!");
 	}
-	
 }
 
 -(ROI*)makePointForOval:(ROI*)circle

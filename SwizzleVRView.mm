@@ -400,7 +400,7 @@ static NSRecursiveLock *drawLock = nil;
 				NSPoint mouseLocationOnScreen = [[self window] convertBaseToScreen:[theEvent locationInWindow]];
 				NSDictionary *pass = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:[self selected3DPointIndex]], @"index", NSStringFromPoint(mouseLocationOnScreen), @"mouse",
 									  nil];
-				[[NSNotificationCenter defaultCenter] postNotificationName: @"3DROIManagerShow" object:pass  userInfo: nil];
+				[[NSNotificationCenter defaultCenter] postNotificationName: @"3DROIManagerShow" object:pass  userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[self controller] viewer], @"viewer",nil]];
 
 				if (clickCount == 2)
 				{
@@ -562,7 +562,7 @@ static NSRecursiveLock *drawLock = nil;
 	{
 		//updates if nothing is selected
 		NSDictionary *pass = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithInt:-1], @"index", nil];
-		[[NSNotificationCenter defaultCenter] postNotificationName: @"3DROIManagerShow" object:pass  userInfo: nil];
+		[[NSNotificationCenter defaultCenter] postNotificationName: @"3DROIManagerShow" object:pass  userInfo: [NSDictionary dictionary]];
 	}
 	bestRenderingWasGenerated = NO;
 	noWaitDialog = NO;

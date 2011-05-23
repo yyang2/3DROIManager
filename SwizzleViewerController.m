@@ -15,7 +15,7 @@
 {
 	NSMutableArray *viewersCT = [ViewerController getDisplayed2DViewers];
 	NSMutableArray *viewersPET = [ViewerController getDisplayed2DViewers];
-	int		i, x;
+	int		i;
 	BOOL	fused = NO;
 	
 	if( sender && blendingController)

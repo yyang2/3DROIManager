@@ -45,13 +45,13 @@
 	
 	//swizzle DCMPix
 	
-	Class DCMPictures	=objc_getClass("DCMPix");
-	Class SwizzleDCM	=objc_getClass("SwizzleDCMPix");
-
-	
-	Method OtheroriginalLoad =class_getInstanceMethod(DCMPictures, @selector(loadDICOMPapyrus));
-	Method OthernewLoad		=class_getInstanceMethod(SwizzleDCM, @selector(loadDICOMPapyrus));
-	IMP OthernewLoadingImp	=method_getImplementation(OthernewLoad);
+//	Class DCMPictures	=objc_getClass("DCMPix");
+//	Class SwizzleDCM	=objc_getClass("SwizzleDCMPix");
+//
+//	
+//	Method OtheroriginalLoad =class_getInstanceMethod(DCMPictures, @selector(loadDICOMPapyrus));
+//	Method OthernewLoad		=class_getInstanceMethod(SwizzleDCM, @selector(loadDICOMPapyrus));
+//	IMP OthernewLoadingImp	=method_getImplementation(OthernewLoad);
 //	method_setImplementation(OtheroriginalLoad,OthernewLoadingImp);
 
     //Swizzle ROI

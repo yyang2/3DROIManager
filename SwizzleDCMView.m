@@ -100,7 +100,7 @@ NSString *pasteBoardOsiriXPlugin = @"OsiriXPluginDataType";
 						if ([[self className] hasPrefix:@"Orthogonal"]) {
 							NSDictionary *pass = [NSDictionary dictionaryWithObjectsAndKeys:[curRoiList objectAtIndex:i], @"roi", NSStringFromPoint([NSEvent mouseLocation]), @"mouse", nil];
 							
-							[nc postNotificationName:@"3DROIManagerShow" object:pass userInfo:nil];
+							[nc postNotificationName:@"3DROIManagerShow" object:pass userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[[self controller] viewer], @"viewer",nil]];
 							
 						}
 						
