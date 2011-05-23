@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <OsiriX Headers/ITKSegmentation3DController.h>
+#import <OsiriXAPI/ITKSegmentation3DController.h>
 @class ViewerController;
 
 @interface ITKSegmentation3DController (Yang)
