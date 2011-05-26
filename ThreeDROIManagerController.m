@@ -709,7 +709,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 - (void) UpdateStatistics: (NSNotification *) notification
 {
     int row;
-	if([notification object] != tableView) return;
+	if([notification object] != tableView ) return;
     row = [tableView selectedRow];
 	
 	NSLog(@"Calling update");
@@ -746,7 +746,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 				[GenerateTACButton setEnabled:NO];
 				[LockROIButton setEnabled:NO];
 				
-				return;
+//				return;
 			}	
 		}
 		
@@ -852,7 +852,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 - (IBAction) gotoFrame:(id)sender{
-	// called on changing frameslider, updates all windows to the correct time frame
+// called on changing frameslider, updates all windows to the correct time frame
 
 //	NSLog(@"Max:%f, Min,%f", [D3View maximumValue], [D3View maximumValue]);
 	if (maxFrames == 1) return;
@@ -863,11 +863,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	else [orthoView setMovieIndex:newframe];
 	[viewer setMovieIndex:newframe];
 	[self refreshForFrame:newframe];
-	[self UpdateStatistics:nil];
+	
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTableViewSelectionDidChangeNotification object:tableView userInfo:nil];
 
 	[TimeField setStringValue: [NSString stringWithFormat:@"Frame:%i\nDuration: %i s\nTime:%@ s", newframe+1, 
 								[[[viewer pixList:activeFrame] objectAtIndex:0] frameDuration]/1000, 
 								[ElapsedTime objectAtIndex:activeFrame]]];
+
 }
 
 -(ROI *) ROIForSelectedIndex {
@@ -898,7 +900,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 }
 
 
-- (IBAction) playFrames:(id)sender {
+- (IBAction) playFrames:(id)sender 
+{
 	//yet to be implemented, supposed to respond to play button, so we could play through all the frames of a dynamic image like a movie
 	[NSTimer scheduledTimerWithTimeInterval:1.0
 									 target:self
@@ -907,7 +910,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 									repeats:YES];
 }
 
-- (void)nextframe:(NSNotification *) note {
+- (void)nextframe:(NSNotification *) note 
+{
 	if (activeFrame < maxFrames) [self refreshForFrame:activeFrame+1];
 }
 
