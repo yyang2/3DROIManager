@@ -1648,6 +1648,8 @@
 		DD13821511F61ED600B7A8F6 /* Chart.png in Resources */ = {isa = PBXBuildFile; fileRef = DD13821411F61ED600B7A8F6 /* Chart.png */; };
 		DD13821811F61FC200B7A8F6 /* Export.png in Resources */ = {isa = PBXBuildFile; fileRef = DD13821711F61FC200B7A8F6 /* Export.png */; };
 		DD13853B11F7863B00B7A8F6 /* Threshold.tif in Resources */ = {isa = PBXBuildFile; fileRef = DD13853A11F7863B00B7A8F6 /* Threshold.tif */; };
+		DD2229F313A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2229F113A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h */; };
+		DD2229F413A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2229F213A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m */; };
 		DD33792E12FB7018003BCCAE /* VRView+Yang.h in Headers */ = {isa = PBXBuildFile; fileRef = DD33792C12FB7018003BCCAE /* VRView+Yang.h */; };
 		DD33792F12FB7018003BCCAE /* VRView+Yang.mm in Sources */ = {isa = PBXBuildFile; fileRef = DD33792D12FB7018003BCCAE /* VRView+Yang.mm */; };
 		DD3A57B31199F18A00ED9FF0 /* CLUTBar.h in Headers */ = {isa = PBXBuildFile; fileRef = DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -3346,6 +3348,8 @@
 		DD13821411F61ED600B7A8F6 /* Chart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chart.png; sourceTree = "<group>"; };
 		DD13821711F61FC200B7A8F6 /* Export.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Export.png; sourceTree = "<group>"; };
 		DD13853A11F7863B00B7A8F6 /* Threshold.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Threshold.tif; sourceTree = "<group>"; };
+		DD2229F113A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwizzleOrthoMPRPETCTViewer.h; path = 3DROIManager.xcodeproj/SwizzleOrthoMPRPETCTViewer.h; sourceTree = "<group>"; };
+		DD2229F213A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwizzleOrthoMPRPETCTViewer.m; path = 3DROIManager.xcodeproj/SwizzleOrthoMPRPETCTViewer.m; sourceTree = "<group>"; };
 		DD33792C12FB7018003BCCAE /* VRView+Yang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "VRView+Yang.h"; sourceTree = "<group>"; };
 		DD33792D12FB7018003BCCAE /* VRView+Yang.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "VRView+Yang.mm"; sourceTree = "<group>"; };
 		DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLUTBar.h; sourceTree = "<group>"; };
@@ -5187,6 +5191,8 @@
 				C5F89F4312F0BAC10066D542 /* SwizzleROIVolume.mm */,
 				C5F8AC1312F0BC590066D542 /* SwizzleOrthogonalMPRController.h */,
 				C5F8AC1412F0BC590066D542 /* SwizzleOrthogonalMPRController.m */,
+				DD2229F113A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h */,
+				DD2229F213A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m */,
 				DDE7045812F0D2E300E73161 /* SwizzleVRView.h */,
 				DDE7045912F0D2E300E73161 /* SwizzleVRView.mm */,
 			);
@@ -6827,6 +6833,7 @@
 				C5E5E14013303A7B00304430 /* SwizzleDCMView.h in Headers */,
 				C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */,
 				DD740B0F1343D87B007F1EAD /* SwizzleROI.h in Headers */,
+				DD2229F313A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6965,6 +6972,7 @@
 				C5E5E14113303A7B00304430 /* SwizzleDCMView.m in Sources */,
 				C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */,
 				DD740B101343D87B007F1EAD /* SwizzleROI.m in Sources */,
+				DD2229F413A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

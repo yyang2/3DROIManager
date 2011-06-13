@@ -747,7 +747,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 				[LockROIButton setEnabled:NO];
 				
 //				return;
-			}	
+			}
 		}
 		
 		[LockROIButton setEnabled:YES];

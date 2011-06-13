@@ -13,6 +13,7 @@
 #import "SwizzleOrthogonalMPRController.h"
 #import "SwizzleDCMPix.h"
 #import "SwizzleROI.h"
+#import "SwizzleOrthoMPRPETCTViewer.h"
 
 @implementation ThreeDROIManagerFilter
 
@@ -91,7 +92,19 @@
 	Method newsetROI	=	class_getInstanceMethod(SwizzleROIVol, @selector(setROIList:));
 	IMP impsetROI		=	method_getImplementation(newsetROI);
 	method_setImplementation(setROI, impsetROI);
+
 	
+    //Swizzle OrthoMPRPETCTViewer
+    
+	Class OrthoPETCTViewer = objc_getClass("OrthogonalMPRPETCTViewer");
+	Class SwizzleOrthoPETCTViewer			= objc_getClass("SwizzleOrthoMPRPETCTViewer");
+	
+    
+	Method origSetMovieIndex = class_getInstanceMethod(OrthoPETCTViewer, @selector( setMovieIndex:));
+	Method newSetMovieIndex = class_getInstanceMethod(SwizzleOrthoPETCTViewer, @selector( setMovieIndex:));
+	IMP impMovieIndex = method_getImplementation(newSetMovieIndex);
+	method_setImplementation(origSetMovieIndex, impMovieIndex);
+
 	//Swizzle VRView
 	
 	Class  VR			= objc_getClass("VRView");

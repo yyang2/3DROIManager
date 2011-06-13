@@ -29,8 +29,11 @@
 		[originalROIList release];
 		
 		// yang this adds ROIs onto fused images also
-		if([[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"]) originalROIList = 
-			[[[[vC imageView] dcmRoiList] subarrayWithRange:NSMakeRange([[pix objectAtIndex:0] ID], [pix count])] retain];
+		if([[NSUserDefaults standardUserDefaults] integerForKey:@"PreclinicalAnalysis"])  
+        {   
+            originalROIList = [[[[vC imageView] dcmRoiList] subarrayWithRange:NSMakeRange([[pix objectAtIndex:0] ID], [pix count])] retain];
+//            NSLog(@"making image from %i to %i", [[pix objectAtIndex:0] ID], [pix count]);
+        }
 		else originalROIList = [[[vC imageView] dcmRoiList] retain];
 		
 	}

@@ -173,7 +173,7 @@ NSInteger firstNumSort(id str1, id str2, void *context) {
 		{
 			if( [imageView flippedData])
 			{
-				if( error) *error = [NSString stringWithFormat: NSLocalizedString(@"Only ONE ROI per image, please! (im: %d)", nil), pixList[curMovieIndex] -x];
+				if( error) *error = [NSString stringWithFormat: NSLocalizedString(@"Only ONE ROI per image, please! (im: %d)", nil), x];
 			}
 			else
 			{
