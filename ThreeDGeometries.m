@@ -314,7 +314,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 			[controller.deleteLaterList addObject:[deletestack objectAtIndex:i]];
 	}
 	
-	newCenter.release;
+	[newCenter release];
 }
 
 
@@ -707,7 +707,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 			[controller.deleteLaterList addObject:[deletestack objectAtIndex:i]];
 	}
 	
-	newCenter.release;
+	[newCenter release];
 }
 
 #pragma mark -
@@ -848,7 +848,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	
 	if ([[note object] objectForKey:@"roi"] && ([[note userInfo] objectForKey:@"viewer"] == orthoView || [[note userInfo] objectForKey:@"viewer"] == FusionOrthoView))
 	{
-        [D3View.view unselectAllActors];
+//        [D3View.view unselectAllActors];
         selectedROI = [controller centerForOrthoROI:[[note object] objectForKey:@"roi"]];
 	}
 	else if([[note userInfo] objectForKey:@"viewer"] == tempViewer)
@@ -862,7 +862,7 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	}
 	else 
     {
-        [D3View.view unselectAllActors];
+//        [D3View.view unselectAllActors];
         [[self window] orderOut:self];
 		return;
     }
@@ -892,8 +892,15 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 	}
 	[controller setSelectedTableROI:selectedROI.name];
 	NSPoint pointOnScreen = NSPointFromString([[note object] objectForKey:@"mouse"]);
-	[[self window] orderFront:self];
-	[[self window] setFrameTopLeftPoint:NSMakePoint(pointOnScreen.x + 30, pointOnScreen.y - 30)];
+
+    [[self window] orderFront:self];
+    NSRect frame = [[self window] frame];
+    NSPoint currentTopLeft = NSMakePoint(frame.origin.x,frame.size.height+frame.origin.y);
+        
+    if(abs(pointOnScreen.x - currentTopLeft.x) > 30+12 || abs(pointOnScreen.y - currentTopLeft.y) > 30+12)
+    {
+        [[self window] setFrameTopLeftPoint:NSMakePoint(pointOnScreen.x + 30, pointOnScreen.y - 30)];
+    }
 	
 }
 
@@ -995,8 +1002,8 @@ NSString * const EllipseShapeSuffix = @"ellipse";
 		myAlert = [NSAlert alertWithMessageText:@"Invalid Name" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"ROIs cannot start with the name 'Oval' or 'Point'"];
 	else if ([self getSphereName:name] != nil || [self getSphereDiameter:name] > 0)
 		myAlert = [NSAlert alertWithMessageText:@"Invalid Name" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Violates naming convention for spheres"];
-	else if ([[tempViewer roisWithName:name in4D:YES] count] > 0)
-		myAlert = [NSAlert alertWithMessageText:@"Invalid Name" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Roi already exists"];
+//	else if ([[tempViewer roisWithName:name in4D:YES] count] > 0)
+//		myAlert = [NSAlert alertWithMessageText:@"Invalid Name" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Roi already exists"];
 	if(myAlert != nil)	
 	{	
 		if(runalert)

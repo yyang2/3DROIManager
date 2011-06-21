@@ -55,8 +55,6 @@ NSInteger firstNumSort(id str1, id str2, void *context) {
     return NSOrderedSame;
 }
 
-
-
 -(NSMutableDictionary*) computeTAC:(ROI*)selectedRoi onframe:(long)frameofroi withFrame:(long)frame
 {
 	
@@ -74,7 +72,7 @@ NSInteger firstNumSort(id str1, id str2, void *context) {
 	lastImageIndex = -1;
 	
 	NSLog( @"computeTAC started");
-	
+
 	
 	lastROI = nil;
 	prevArea = 0;
@@ -88,7 +86,7 @@ NSInteger firstNumSort(id str1, id str2, void *context) {
 	ROI *fROI = nil, *lROI = nil;
 	int	fROIIndex, lROIIndex;
 	ROI	*curROI = nil;
-	
+	    
 	for( x = 0; x < [pixList[curMovieIndex] count]; x++)
 	{
 		DCMPix	*curDCM = [pixList[curMovieIndex] objectAtIndex: x];
