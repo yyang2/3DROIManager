@@ -133,7 +133,7 @@
 { 
 	int curFrame;
 	
-	for (curFrame=0; (curFrame)<(totalframes); curFrame++) {
+	for (curFrame=0; (curFrame)<(totalframes); curFrame++){
 		[viewer setMovieIndex:(curFrame)];
 		NSLog(@"Frame Number: %i", curFrame);
 		//set into temp array

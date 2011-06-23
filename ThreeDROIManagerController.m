@@ -30,6 +30,7 @@
 #import "DynamicInterface.h"
 #import "CLUTBar.h"
 #import "FrameSlider.h" 
+#import "KMLauncher.h"
 
 @class ROIVolume;
 @implementation ThreeDROIManagerController
@@ -723,6 +724,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[ChangeRadiusButton setEnabled:NO];
 		[StartVolumeButton setEnabled:NO];
 		[GenerateTACButton setEnabled:NO];
+        [KMButton setEnabled:NO];
 		[LockROIButton setEnabled:NO];
 	}
 	else {
@@ -730,6 +732,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 
 		if (maxFrames >1){
 			[GenerateTACButton setEnabled:YES];
+            [KMButton setEnabled:YES];
 			if(![[[curROIlist objectAtIndex:row] objectForKey:@"frames"] containsObject:[NSNumber numberWithInt:activeFrame]]) {
 				int i;
 				
@@ -744,6 +747,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 				[DeleteButton setEnabled:NO];
 				[StartVolumeButton setEnabled:NO];
 				[GenerateTACButton setEnabled:NO];
+                [KMButton setEnabled:NO];
 				[LockROIButton setEnabled:NO];
 				
 //				return;
@@ -783,6 +787,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		[HideButton setEnabled:NO];
 		[StartVolumeButton setEnabled:NO];
 		[GenerateTACButton setEnabled:NO];
+        [KMButton setEnabled:NO];
+            
 		[GoToButton setEnabled:YES];
 
 			
@@ -819,7 +825,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			[LockROIButton setEnabled:YES];
 			[GoToButton setEnabled:YES];
 			[StartVolumeButton setEnabled:NO];
-			if (maxFrames >1) [GenerateTACButton setEnabled:YES];
+			if (maxFrames >1) {
+                [GenerateTACButton setEnabled:YES];
+                [KMButton setEnabled:YES];
+            }
 			[ROIStatisticsField setStringValue:@"Mask Region"];
 		}
 		else {
@@ -829,6 +838,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 			[GoToButton setEnabled:NO];
 			[StartVolumeButton setEnabled:NO];
 			[GenerateTACButton setEnabled:NO];
+            [KMButton setEnabled:NO];
 			[ROIStatisticsField setStringValue:@"*******\nNot a Recognizable Volume\n********"];
 		}	
 	}
@@ -1238,6 +1248,10 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	[[NSNotificationCenter defaultCenter] postNotificationName: OsirixUpdateViewNotification object:nil userInfo: nil];
 }
 
+-(IBAction) StartKM:(id)sender
+{
+    [[KMLauncher alloc] initWithViewer:viewer];
+}
 
 
 

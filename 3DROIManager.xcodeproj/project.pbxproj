@@ -22,6 +22,9 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		ABA48A650680BB600089EB4F /* ThreeDROIManagerFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABA48A670680BB690089EB4F /* ThreeDROIManagerFilter.mm in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */; };
+		C58E57F213B2601C0002B0CA /* KMLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = C58E57F013B2601C0002B0CA /* KMLauncher.h */; };
+		C58E57F313B2601C0002B0CA /* KMLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = C58E57F113B2601C0002B0CA /* KMLauncher.m */; };
+		C58E57F513B265080002B0CA /* KMLauncher.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58E57F413B265080002B0CA /* KMLauncher.xib */; };
 		C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */; };
 		C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */; };
 		C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */ = {isa = PBXBuildFile; fileRef = DD90230211C7E23100821250 /* OsiriX.framework */; };
@@ -1724,6 +1727,9 @@
 		AB5D36050680E57E00F4007A /* 3DROIManager.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 3DROIManager.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA48A640680BB600089EB4F /* ThreeDROIManagerFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ThreeDROIManagerFilter.h; sourceTree = "<group>"; };
 		ABA48A660680BB690089EB4F /* ThreeDROIManagerFilter.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = ThreeDROIManagerFilter.mm; sourceTree = "<group>"; };
+		C58E57F013B2601C0002B0CA /* KMLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLauncher.h; sourceTree = "<group>"; };
+		C58E57F113B2601C0002B0CA /* KMLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLauncher.m; sourceTree = "<group>"; };
+		C58E57F413B265080002B0CA /* KMLauncher.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KMLauncher.xib; sourceTree = "<group>"; };
 		C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleBonjourBrowser.h; sourceTree = "<group>"; };
 		C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleBonjourBrowser.m; sourceTree = "<group>"; };
 		C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleDCMView.h; sourceTree = "<group>"; };
@@ -3460,6 +3466,7 @@
 				DD1381E511F6090500B7A8F6 /* crossCursor.tif */,
 				2716B728116BAC8B000E1A5A /* DynamicROI.xib */,
 				DDFE8F60130322010015387F /* 3DROIManager.xib */,
+				C58E57F413B265080002B0CA /* KMLauncher.xib */,
 				DD13821111F6125900B7A8F6 /* SphereNo.tiff */,
 				DD13821711F61FC200B7A8F6 /* Export.png */,
 				2716B712116BAC77000E1A5A /* Geometries.xib */,
@@ -3478,6 +3485,8 @@
 				DD045155119B2F8700FE36A3 /* FrameSlider.m */,
 				DD3A57B11199F18A00ED9FF0 /* CLUTBar.h */,
 				DD3A57B21199F18A00ED9FF0 /* CLUTBar.m */,
+				C58E57F013B2601C0002B0CA /* KMLauncher.h */,
+				C58E57F113B2601C0002B0CA /* KMLauncher.m */,
 				270F3DB4116BCBCA000418EA /* DynamicInterface.h */,
 				270F3DB5116BCBCA000418EA /* DynamicInterface.m */,
 				271B21FB116BC559007B6FD3 /* ThreeDGeometries.h */,
@@ -6834,6 +6843,7 @@
 				C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */,
 				DD740B0F1343D87B007F1EAD /* SwizzleROI.h in Headers */,
 				DD2229F313A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.h in Headers */,
+				C58E57F213B2601C0002B0CA /* KMLauncher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6932,6 +6942,7 @@
 				C5F8A6D112F0BC020066D542 /* vtkDataArrayTemplateImplicit.txx in Resources */,
 				C5F8A82512F0BC020066D542 /* vtkImageIterator.txx in Resources */,
 				C5F8A84212F0BC020066D542 /* vtkImageProgressIterator.txx in Resources */,
+				C58E57F513B265080002B0CA /* KMLauncher.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6973,6 +6984,7 @@
 				C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */,
 				DD740B101343D87B007F1EAD /* SwizzleROI.m in Sources */,
 				DD2229F413A6C22600B49337 /* SwizzleOrthoMPRPETCTViewer.m in Sources */,
+				C58E57F313B2601C0002B0CA /* KMLauncher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

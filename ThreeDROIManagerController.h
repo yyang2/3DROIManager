@@ -43,7 +43,7 @@
 	IBOutlet CLUTBar			*CLUTColumn;
 	IBOutlet NSPanel			*ChangeRadiusWindow;
 	IBOutlet NSTextField		*ROIStatisticsField, *VisibleMin, *VisibleMax, *TimeField, *ChangeRadiusOriginal, *ChangeRadiusNew, *ChangeRadiusName;
-	IBOutlet NSButton			*playButton, *ChangeRadiusButton, *ShowButton, *HideButton, *DeleteButton, *GoToButton, *StartVolumeButton, *GenerateTACButton, *ExportROIButton, *LockMin,*LockROIButton;
+	IBOutlet NSButton			*playButton, *ChangeRadiusButton, *ShowButton, *HideButton, *DeleteButton, *GoToButton, *StartVolumeButton, *GenerateTACButton, *ExportROIButton, *LockMin,*LockROIButton, *KMButton;
 	float		pixelSpacingZ;
 	
 	IMP			oldClickImp, oldMouseUp;
@@ -94,6 +94,7 @@
 - (IBAction)generateTAC:(id)sender;
 - (IBAction) ShowROI:(id)sender;
 - (IBAction) openSphereDrawer:(id)sender;
+- (IBAction) StartKM:(id)sender;
 
 // Table view data source methods
 - (void) deleteThisROI: (ROI*) roi;
