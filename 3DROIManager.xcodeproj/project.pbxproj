@@ -25,6 +25,7 @@
 		C58E57F213B2601C0002B0CA /* KMLauncher.h in Headers */ = {isa = PBXBuildFile; fileRef = C58E57F013B2601C0002B0CA /* KMLauncher.h */; };
 		C58E57F313B2601C0002B0CA /* KMLauncher.m in Sources */ = {isa = PBXBuildFile; fileRef = C58E57F113B2601C0002B0CA /* KMLauncher.m */; };
 		C58E57F513B265080002B0CA /* KMLauncher.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58E57F413B265080002B0CA /* KMLauncher.xib */; };
+		C59B83DC13B3B8AF00559646 /* KM.tiff in Resources */ = {isa = PBXBuildFile; fileRef = C59B83DB13B3B8AF00559646 /* KM.tiff */; };
 		C5BE11B01337F24F0053952A /* SwizzleBonjourBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */; };
 		C5BE11B11337F24F0053952A /* SwizzleBonjourBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */; };
 		C5DE13C612516F540033CE30 /* OsiriX.framework in Resources */ = {isa = PBXBuildFile; fileRef = DD90230211C7E23100821250 /* OsiriX.framework */; };
@@ -1730,6 +1731,7 @@
 		C58E57F013B2601C0002B0CA /* KMLauncher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLauncher.h; sourceTree = "<group>"; };
 		C58E57F113B2601C0002B0CA /* KMLauncher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLauncher.m; sourceTree = "<group>"; };
 		C58E57F413B265080002B0CA /* KMLauncher.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KMLauncher.xib; sourceTree = "<group>"; };
+		C59B83DB13B3B8AF00559646 /* KM.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = KM.tiff; sourceTree = "<group>"; };
 		C5BE11AE1337F24F0053952A /* SwizzleBonjourBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleBonjourBrowser.h; sourceTree = "<group>"; };
 		C5BE11AF1337F24F0053952A /* SwizzleBonjourBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleBonjourBrowser.m; sourceTree = "<group>"; };
 		C5E5E13E13303A7B00304430 /* SwizzleDCMView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleDCMView.h; sourceTree = "<group>"; };
@@ -3429,11 +3431,11 @@
 		089C166AFE841209C02AAC07 /* 3DROIManager */ = {
 			isa = PBXGroup;
 			children = (
-				08FB77AFFE84173DC02AAC07 /* Classes */,
-				32C88E010371C26100C91783 /* Other Sources */,
-				089C167CFE841241C02AAC07 /* Resources */,
+				08FB77AFFE84173DC02AAC07 /* ROIManager Classes */,
+				32C88E010371C26100C91783 /* Other Headers */,
+				089C167CFE841241C02AAC07 /* UI */,
 				089C1671FE841209C02AAC07 /* Frameworks and Libraries */,
-				19C28FB8FE9D52D311CA2CBB /* Products */,
+				19C28FB8FE9D52D311CA2CBB /* Plugin */,
 			);
 			name = 3DROIManager;
 			sourceTree = "<group>";
@@ -3452,13 +3454,14 @@
 			name = "Frameworks and Libraries";
 			sourceTree = "<group>";
 		};
-		089C167CFE841241C02AAC07 /* Resources */ = {
+		089C167CFE841241C02AAC07 /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				DD13853A11F7863B00B7A8F6 /* Threshold.tif */,
 				DD1381E311F608F800B7A8F6 /* Cross.tif */,
 				DD1381F511F60C7700B7A8F6 /* Unlock.png */,
 				27E86934120A9BBA0012B0BB /* Forward.tif */,
+				C59B83DB13B3B8AF00559646 /* KM.tiff */,
 				47AA04C412120EB9007D5EC8 /* Orthogonal.png */,
 				DD1381F611F60C7700B7A8F6 /* Lock.png */,
 				DD13821411F61ED600B7A8F6 /* Chart.png */,
@@ -3474,10 +3477,10 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 			);
-			name = Resources;
+			name = UI;
 			sourceTree = "<group>";
 		};
-		08FB77AFFE84173DC02AAC07 /* Classes */ = {
+		08FB77AFFE84173DC02AAC07 /* ROIManager Classes */ = {
 			isa = PBXGroup;
 			children = (
 				DDE7044F12F0D18100E73161 /* Osirix Mods */,
@@ -3496,18 +3499,18 @@
 				FDDB4D73115B5E93008EBBAE /* ThreeDROIManagerController.h */,
 				FDDB4D74115B5E93008EBBAE /* ThreeDROIManagerController.m */,
 			);
-			name = Classes;
+			name = "ROIManager Classes";
 			sourceTree = "<group>";
 		};
-		19C28FB8FE9D52D311CA2CBB /* Products */ = {
+		19C28FB8FE9D52D311CA2CBB /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
 				AB5D36050680E57E00F4007A /* 3DROIManager.osirixplugin */,
 			);
-			name = Products;
+			name = Plugin;
 			sourceTree = "<group>";
 		};
-		32C88E010371C26100C91783 /* Other Sources */ = {
+		32C88E010371C26100C91783 /* Other Headers */ = {
 			isa = PBXGroup;
 			children = (
 				C5F89F7D12F0BC000066D542 /* VTKHeaders */,
@@ -3515,7 +3518,7 @@
 				DD85E06211878F190025BE95 /* 2DBlending.tif */,
 				32DBCF630370AF2F00C91783 /* 3DROIManager_Prefix.pch */,
 			);
-			name = "Other Sources";
+			name = "Other Headers";
 			sourceTree = "<group>";
 		};
 		C5F89F7D12F0BC000066D542 /* VTKHeaders */ = {
@@ -6943,6 +6946,7 @@
 				C5F8A82512F0BC020066D542 /* vtkImageIterator.txx in Resources */,
 				C5F8A84212F0BC020066D542 /* vtkImageProgressIterator.txx in Resources */,
 				C58E57F513B265080002B0CA /* KMLauncher.xib in Resources */,
+				C59B83DC13B3B8AF00559646 /* KM.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
